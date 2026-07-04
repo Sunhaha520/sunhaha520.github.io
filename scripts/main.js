@@ -60,6 +60,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const updateTheme = (newTheme) => {
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem(storageKey, newTheme);
+    
+    // Sync highlight.js styles
+    const lightStyle = document.getElementById('hljs-light');
+    const darkStyle = document.getElementById('hljs-dark');
+    if (lightStyle && darkStyle) {
+      if (newTheme === 'dark') {
+        lightStyle.disabled = true;
+        darkStyle.disabled = false;
+      } else {
+        lightStyle.disabled = false;
+        darkStyle.disabled = true;
+      }
+    }
   };
 
   // Circular theme reveal via View Transitions API, ported from the Astro
@@ -592,11 +605,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!code || !shell) return;
 
     if (window.hljs && !code.classList.contains('hljs')) {
+      // highlight.js 11+ prefers 'language-xxx' class on the <code> element.
       const highlightLanguage = getHighlightLanguage(codeLanguage);
-      if (highlightLanguage && window.hljs.getLanguage(highlightLanguage)) {
+      if (highlightLanguage && highlightLanguage !== 'text') {
         code.classList.add('language-' + highlightLanguage);
       }
-      window.hljs.highlightElement(code);
+      try {
+        window.hljs.highlightElement(code);
+      } catch (e) {
+        console.error('hljs highlight error:', e);
+      }
     }
 
     if (!shell.querySelector('.code-copy-btn')) {

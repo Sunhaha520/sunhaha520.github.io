@@ -1970,7 +1970,6 @@ body {
   border-radius: 1rem;
   border: 1px solid var(--code-border);
   background: var(--code-bg);
-  color: var(--code-text);
   box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -1988,6 +1987,18 @@ body {
 
 .prose .code-block-shell > pre {
   margin: 0;
+}
+
+.prose pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  color: inherit !important;
+}
+
+/* highlight.js theme overrides */
+.hljs {
+  background: transparent !important;
+  padding: 0 !important;
 }
 
 .code-block-shell.is-collapsible > pre {
@@ -2176,26 +2187,29 @@ body {
   transition: filter 0.6s ease, opacity 0.6s ease, transform 0.6s ease;
 }
 
-.prose .katex-display,
-.memo-card-content .katex-display {
-  margin: 1.35rem 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.15rem 0;
-}
-
-.prose .katex-display::-webkit-scrollbar,
-.memo-card-content .katex-display::-webkit-scrollbar {
-  height: 0;
-}
-
-.prose .katex,
-.memo-card-content .katex {
-  font-size: 1.04em;
-}
-
 .prose .bilibili-embed {
   position: relative;
+}
+
+/* KaTeX Layout Fix */
+.katex-mathml {
+  display: none;
+}
+.katex-html {
+  display: inline-block;
+}
+.katex-display {
+  display: block;
+  margin: 1em 0;
+  text-align: center;
+}
+.katex-display > .katex {
+  display: inline-block;
+  text-align: initial;
+}
+.katex-display > .katex > .katex-html {
+  display: block;
+}
   width: 100%;
   margin: 1.5rem 0;
   overflow: hidden;

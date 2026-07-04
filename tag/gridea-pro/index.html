@@ -5,7 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/styles/main.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/atelier-forest-light.min.css">
+<link rel="stylesheet" href="/styles/atom-one-light.min.css" id="hljs-light">
+<link rel="stylesheet" href="/styles/atom-one-dark.min.css" id="hljs-dark">
+<link rel="stylesheet" href="/styles/katex.min.css">
 <meta name="theme-color" content="#2a408e">
 <meta name="generator" content="Gridea Pro 1.2.2">
 <title>标签：Gridea Pro - KELE++</title>
@@ -45,6 +47,19 @@
       }
 
       document.documentElement.setAttribute('data-theme', resolvedTheme);
+
+      // Sync highlight.js styles immediately to prevent FOUC
+      var lightStyle = document.getElementById('hljs-light');
+      var darkStyle = document.getElementById('hljs-dark');
+      if (lightStyle && darkStyle) {
+        if (resolvedTheme === 'dark') {
+          lightStyle.disabled = true;
+          darkStyle.disabled = false;
+        } else {
+          lightStyle.disabled = false;
+          darkStyle.disabled = true;
+        }
+      }
     } catch (e) {}
   })();
 </script>
@@ -432,25 +447,18 @@
   
 </div>
 
+<script src="/scripts/highlight.min.js"></script>
 <script src="/scripts/i18n-boot.js"></script>
 <script src="/scripts/main.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js" defer></script>
 
-<!-- KaTeX math rendering: simplified CDN version similar to cactus/minimalist themes -->
-<link rel="stylesheet" href="https://unpkg.zhimg.com/katex@0.16.11/dist/katex.min.css">
-<script src="https://unpkg.zhimg.com/katex@0.16.11/dist/katex.min.js" defer></script>
-<script src="https://unpkg.zhimg.com/katex@0.16.11/dist/contrib/auto-render.min.js" defer></script>
-<script defer>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.renderMathInElement) {
-      window.renderMathInElement(document.body, {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$', right: '$', display: false},
-          {left: '\\(', right: '\\)', display: false},
-          {left: '\\[', right: '\\]', display: true}
-        ],
-        throwOnError: false
+<script>
+  // Final safeguard to ensure highlight.js runs even if main.js defer delay is too long
+  window.addEventListener('load', function() {
+    if (window.hljs) {
+      document.querySelectorAll('pre code').forEach((el) => {
+        if (!el.classList.contains('hljs')) {
+          window.hljs.highlightElement(el);
+        }
       });
     }
   });
