@@ -21,20 +21,11 @@
 <script>
   (function () {
     try {
-      // Mark <html> as i18n-pending BEFORE first paint. CSS hides all
-      // [data-i18n] nodes (visibility:hidden, layout preserved) until
-      // i18n-boot.js finishes translating them, eliminating the language
-      // "flash/jump" on load. Removed by i18n-boot.js after translation.
+      // Mark <html> as i18n-pending BEFORE first paint.
+      // The CSS in main.css hides the body when this class is present.
       document.documentElement.classList.add('i18n-pending');
-      // Safety net: if i18n-boot.js fails to load/run, reveal content after 3s
-      // so the page is never permanently blank.
-      setTimeout(function () {
-        document.documentElement.classList.remove('i18n-pending');
-      }, 3000);
-
-      // Theme init only. Language defaulting + early i18n translation are now
-      // handled by i18n-boot.js (loaded at end of <body>, before main.js), which
-      // runs synchronously and translates static [data-i18n] nodes before paint.
+      
+      // Theme init only.
       var storageKey = 'chirping-gridea-theme';
       var theme = localStorage.getItem(storageKey);
       var mode = 'user';
@@ -564,7 +555,25 @@
 <script src="/scripts/main.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js" defer></script>
 
-<!-- KaTeX math rendering removed to match cactus rendering behavior -->
+<!-- KaTeX math rendering: simplified CDN version similar to cactus/minimalist themes -->
+<link rel="stylesheet" href="https://unpkg.zhimg.com/katex@0.16.11/dist/katex.min.css">
+<script src="https://unpkg.zhimg.com/katex@0.16.11/dist/katex.min.js" defer></script>
+<script src="https://unpkg.zhimg.com/katex@0.16.11/dist/contrib/auto-render.min.js" defer></script>
+<script defer>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.renderMathInElement) {
+      window.renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ],
+        throwOnError: false
+      });
+    }
+  });
+</script>
 
 
 

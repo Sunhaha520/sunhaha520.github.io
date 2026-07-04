@@ -3,14 +3,12 @@
  * Pixel-perfect migration from Astro version
  */
 
-/* i18n anti-FOUC: hide translatable nodes until i18n-boot.js has applied the
-   correct language. visibility:hidden (not display:none) preserves layout so
-   there is no shift/jump. The .i18n-pending class is added synchronously in
-   <head> and removed by i18n-boot.js after translation. A 3s safety timeout
-   in the head script guarantees content is never hidden forever. */
-html.i18n-pending [data-i18n],
-html.i18n-pending [data-i18n-aria],
-html.i18n-pending [data-i18n-title] { visibility: hidden; }
+/* i18n anti-FOUC: hide the entire body until i18n-boot.js has applied the
+   correct language. The .i18n-pending class is added in <head> and removed
+   after the first translation. */
+html.i18n-pending body {
+  opacity: 0 !important;
+}
 
 /* === Theme switch: circular reveal via View Transitions API ===
    Ported from the Astro reference site. The toggle is wrapped in
@@ -153,6 +151,16 @@ html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);
   font-size: 15px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-size: 1em;
 }
 
 body,
@@ -1921,7 +1929,7 @@ body {
   background: color-mix(in srgb, var(--primary) 7%, var(--bg-card));
   color: var(--primary);
   font-family: var(--font-mono);
-  font-size: 0.9em;
+  font-size: 0.875rem;
 }
 
 .prose blockquote {
@@ -1956,6 +1964,7 @@ body {
 }
 
 .prose pre {
+  font-size: 0.875rem;
   overflow: auto;
   padding: 3.25rem 1.25rem 1.25rem;
   border-radius: 1rem;

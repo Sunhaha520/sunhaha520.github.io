@@ -232,13 +232,17 @@
     storageKey: languageStorageKey
   };
 
-  // Run immediately. This script is placed at the end of <body> without defer,
-  // so all static [data-i18n] nodes above it are already parsed and available.
-  applyLanguageStatic(getLanguage());
-
   // Reveal the now-translated nodes. The .i18n-pending class was added in <head>
-  // (with CSS visibility:hidden) to suppress the untranslated-text flash.
-  try {
-    document.documentElement.classList.remove('i18n-pending');
-  } catch (e) {}
+  // (with CSS opacity:0 on body) to suppress the untranslated-text flash.
+  var reveal = function () {
+    try {
+      document.documentElement.classList.remove('i18n-pending');
+    } catch (e) {}
+  };
+
+  applyLanguageStatic(getLanguage());
+  reveal();
+
+  // Safety net: ensure content is revealed even if logic above fails
+  setTimeout(reveal, 3000);
 })();
