@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/atelier-forest-light.min.css">
+<meta name="theme-color" content="#2a408e">
+<meta name="generator" content="Gridea Pro 1.2.2">
+<title>Gridea Pro上手指南  - KELE++</title>
+<meta name="description" content="Welcome to my blog!">
+<meta name="generator" content="Gridea Pro">
+<meta property="og:site_name" content="KELE++">
+<meta property="og:type" content="website">
+<meta property="og:title" content="KELE++">
+<meta property="og:description" content="Welcome to my blog!">
+
+
+<link rel="alternate" type="application/rss+xml" title="KELE++ - Feed" href="/feed.xml">
+<script>
+  (function () {
+    try {
+      // Mark <html> as i18n-pending BEFORE first paint. CSS hides all
+      // [data-i18n] nodes (visibility:hidden, layout preserved) until
+      // i18n-boot.js finishes translating them, eliminating the language
+      // "flash/jump" on load. Removed by i18n-boot.js after translation.
+      document.documentElement.classList.add('i18n-pending');
+      // Safety net: if i18n-boot.js fails to load/run, reveal content after 3s
+      // so the page is never permanently blank.
+      setTimeout(function () {
+        document.documentElement.classList.remove('i18n-pending');
+      }, 3000);
+
+      // Theme init only. Language defaulting + early i18n translation are now
+      // handled by i18n-boot.js (loaded at end of <body>, before main.js), which
+      // runs synchronously and translates static [data-i18n] nodes before paint.
+      var storageKey = 'chirping-gridea-theme';
+      var theme = localStorage.getItem(storageKey);
+      var mode = 'user';
+      var resolvedTheme = 'light';
+
+      if (theme === 'dark' || theme === 'light') {
+        resolvedTheme = theme;
+      } else if (mode === 'dark') {
+        resolvedTheme = 'dark';
+      } else if (mode === 'light') {
+        resolvedTheme = 'light';
+      } else if (
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
+        resolvedTheme = 'dark';
+      }
+
+      document.documentElement.setAttribute('data-theme', resolvedTheme);
+    } catch (e) {}
+  })();
+</script>
+
+
+
+<meta name="referrer" content="no-referrer">
+
+<meta name="description" content="这篇指南会带你一步一步熟悉 Gridea Pro 的界面和操作，从写第一篇文章到把博客发布到互联网上。">
+<link rel="canonical" href="https://sunhaha520.github.io/post/quick-start/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Gridea Pro上手指南 ","url":"https://sunhaha520.github.io/post/quick-start/","description":"这篇指南会带你一步一步熟悉 Gridea Pro 的界面和操作，从写第一篇文章到把博客发布到互联网上。","datePublished":"2025-06-09T21:42:45+08:00","dateModified":"2026-06-25T10:12:03+08:00","author":{"@type":"Person","name":"KELE++"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"KELE++"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://sunhaha520.github.io","name":"KELE++","position":1},{"@type":"ListItem","item":"https://sunhaha520.github.io/post/quick-start/","name":"Gridea Pro上手指南 ","position":2}]}</script>
+<meta property="og:title" content="Gridea Pro上手指南 ">
+<meta property="og:description" content="这篇指南会带你一步一步熟悉 Gridea Pro 的界面和操作，从写第一篇文章到把博客发布到互联网上。">
+<meta property="og:url" content="https://sunhaha520.github.io/post/quick-start/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="KELE++">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://sunhaha520.github.io/post/quick-start/">
+<meta name="twitter:title" content="Gridea Pro上手指南 ">
+<meta name="twitter:description" content="这篇指南会带你一步一步熟悉 Gridea Pro 的界面和操作，从写第一篇文章到把博客发布到互联网上。">
+<meta name="twitter:image" content="/images/avatar.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" crossorigin="anonymous">
+</head>
+<body
+  data-theme-mode="user"
+  style="--primary:#2a408e;--sidebar-width:280px;--content-max-width:800pxpx;"
+>
+<a class="skip-link" href="#main" data-i18n="ui.skip">跳到正文</a>
+<aside class="sidebar" id="sidebar">
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="sidebar-header">
+  <a class="avatar-wrap is-loading" href="/">
+    <img class="avatar-img is-loading" src="/images/avatar.png" alt="Derek Sun">
+  </a>
+  <a class="site-title" href="/">Derek Sun</a>
+  
+  <p class="site-bio">Welcome to my blog!</p>
+  
+</header>
+
+<nav class="sidebar-nav" aria-label="Main Navigation">
+  <ul class="nav-list">
+    
+      
+      
+      
+      
+      
+      <li>
+        <a class="nav-link" href="/">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span data-i18n="nav.home">首页</span>
+          
+        </a>
+      </li>
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a class="nav-link" href="/memos">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8"/><path d="M9 2v3"/><path d="M15 2v3"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M7 10h10"/><path d="M7 14h10"/><path d="M7 18h6"/></svg>
+          <span data-i18n="nav.notes">闪念</span>
+          
+        </a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a class="nav-link" href="/archives/">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="3" x2="21" y1="15" y2="15"/><line x1="9" x2="9" y1="3" y2="21"/><line x1="15" x2="15" y1="3" y2="21"/></svg>
+          <span data-i18n="nav.archives">归档</span>
+          
+        </a>
+      </li>
+      
+      
+      
+      
+      
+      <li>
+        <a class="nav-link" href="/tags">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+          <span data-i18n="nav.tags">标签</span>
+          
+        </a>
+      </li>
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a class="nav-link" href="/links">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+          <span data-i18n="nav.friends">友链</span>
+          
+        </a>
+      </li>
+      
+      
+      
+      
+      
+      <li>
+        <a class="nav-link" href="/post/about">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span data-i18n="nav.about">关于</span>
+          
+        </a>
+      </li>
+      
+    
+  </ul>
+</nav>
+
+<footer class="sidebar-bottom">
+  <div class="sidebar-actions">
+    
+    <button class="action-btn theme-toggle-btn" id="sidebar-theme-toggle" type="button" aria-label="Toggle Theme">
+      <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <span class="sidebar-actions-separator" aria-hidden="true"></span>
+    
+    <div class="social-links">
+      
+      <a class="social-link" href="https://github.com/Sunhaha520" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+      </a>
+      
+      
+      
+      <a class="social-link" href="mailto:dereksunmo@163.com" aria-label="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </a>
+      
+      <a class="social-link" href="/feed.xml" target="_blank" rel="noopener" aria-label="Feed">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+</aside>
+
+<button class="sidebar-mask" id="sidebar-mask" type="button" aria-label="关闭侧栏" data-i18n-aria="ui.closeSidebar"></button>
+
+<div class="main-wrapper">
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-nav-toggle" id="sidebar-toggle" type="button" aria-label="Toggle Sidebar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+        </button>
+        <a class="topbar-site-title" href="/">KELE++</a>
+        <div class="breadcrumbs">
+          <a href="/" data-i18n="nav.home">Home</a><span class="separator">/</span><span class="crumb-current">Gridea Pro上手指南 </span>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <button class="topbar-search" id="header-search-trigger" type="button" aria-label="Search" data-i18n-aria="ui.search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span data-i18n="search.placeholder">搜索站内内容</span>
+          <kbd>/</kbd>
+        </button>
+        <button class="header-action-btn" id="header-lang-btn" type="button" aria-label="Language" data-i18n-aria="ui.language">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    
+
+    <div class="main-container">
+      <div class="main-column">
+        <main id="main" class="content-area">
+          
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">Gridea Pro上手指南 </h1>
+    
+    <p class="post-summary" data-decode-entities="true">这篇指南会带你一步一步熟悉 Gridea Pro 的界面和操作，从写第一篇文章到把博客发布到互联网上。</p>
+    
+    <div class="post-meta">
+      <span class="post-meta-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+        <time datetime="2025-06-09">2025-06-09</time>
+      </span>
+      
+      
+        <span class="post-meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>8 <span data-i18n="post.readingTime">min read</span></span>
+        </span>
+      
+      
+        
+          <a class="post-meta-item taxon-meta-item taxon-meta-item--tag" href="/tag/gridea-pro/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59A2 2 0 0 0 3.83 11l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><path d="M7 7h.01"/></svg>
+            <span>Gridea Pro</span>
+          </a>
+        
+          <a class="post-meta-item taxon-meta-item taxon-meta-item--tag" href="/tag/getting-started/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59A2 2 0 0 0 3.83 11l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><path d="M7 7h.01"/></svg>
+            <span>入门</span>
+          </a>
+        
+      
+      
+      
+    </div>
+  </header>
+
+  
+
+  <div class="post-content prose" id="post-content">
+    <p>这篇指南会带你一步一步熟悉 Gridea Pro 的界面和操作，从写第一篇文章到把博客发布到互联网上。</p>
+<!-- more -->
+<h2 id="heading">认识界面</h2>
+<p>打开 Gridea Pro 后，你会看到左侧是导航栏，右侧是内容区域。</p>
+<p>左侧导航从上到下依次是：</p>
+<table>
+<thead>
+<tr>
+<th>导航</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>文 章</strong></td>
+<td>管理你的所有博客文章</td>
+</tr>
+<tr>
+<td><strong>闪 念</strong></td>
+<td>速记短想法、灵感碎片</td>
+</tr>
+<tr>
+<td><strong>评 论</strong></td>
+<td>查看和管理读者评论</td>
+</tr>
+<tr>
+<td><strong>菜 单</strong></td>
+<td>自定义博客的导航栏</td>
+</tr>
+<tr>
+<td><strong>分 类</strong></td>
+<td>管理文章分类</td>
+</tr>
+<tr>
+<td><strong>标 签</strong></td>
+<td>管理文章标签</td>
+</tr>
+<tr>
+<td><strong>友 链</strong></td>
+<td>管理友情链接</td>
+</tr>
+<tr>
+<td><strong>主 题</strong></td>
+<td>切换和配置博客主题</td>
+</tr>
+<tr>
+<td><strong>配 置</strong></td>
+<td>设置部署平台、SEO、CDN 等</td>
+</tr>
+</tbody>
+</table>
+<p>导航栏底部有两个重要按钮：<strong>「预 览」</strong> 和 <strong>「同 步」</strong>，后面会详细讲到。</p>
+<hr />
+<h2 id="heading-1">第一步：写一篇文章</h2>
+<ol>
+<li>点击左侧导航的 <strong>「文 章」</strong>，进入文章列表页</li>
+<li>点击右上角的 <strong>「 + 」</strong> 按钮，会打开文章编辑器</li>
+<li>最上方是<strong>标题输入框</strong>，下方是<strong>正文编辑区</strong>（支持 Markdown 语法）</li>
+<li>写完内容后，点击编辑器顶部工具栏的 <strong>「 纸飞机 」图标</strong>，会弹出右侧的<strong>文章设置面板</strong></li>
+</ol>
+<p>在文章设置面板中，你可以配置：</p>
+<ul>
+<li><strong>URL</strong> — 文章的访问路径（默认用文件名）</li>
+<li><strong>分 类</strong> — 选择一个分类，或留空</li>
+<li><strong>标 签</strong> — 点击已有标签添加，或输入新标签后按回车创建</li>
+<li><strong>创建时间</strong> — 默认是当前时间，可以手动修改</li>
+<li><strong>封面图</strong> — 粘贴在线图片链接，或点击上传区域从本地选择图片</li>
+<li><strong>列表中隐藏</strong> — 开启后，文章不会出现在博客的文章列表中（适合「关于」页面）</li>
+<li><strong>置顶文章</strong> — 开启后，文章会固定在博客文章列表最顶部</li>
+</ul>
+<p>设置完成后，点击面板底部的 <strong>「发布」</strong> 按钮保存文章。如果还没写完，可以点击编辑器顶部的 <strong>「存草稿」</strong> 先保存为草稿。</p>
+<blockquote>
+<p><strong>小技巧</strong>：在文章正文中插入 <code>&lt;!-- more --&gt;</code> 标记，标记之前的内容会作为文章摘要显示在博客文章列表中。你可以通过编辑器右侧的 <strong>「&hellip;」</strong> 按钮快速插入这个标记。</p>
+</blockquote>
+<hr />
+<h2 id="heading-2">第二步：选择主题</h2>
+<ol>
+<li>点击左侧导航的 <strong>「主 题」</strong></li>
+<li>默认进入 <strong>「选择主题」</strong> 标签页，上方展示当前使用的主题，下方展示其他可选主题</li>
+<li>找到你喜欢的主题，点击 <strong>「使用该主题」</strong> 按钮即可切换</li>
+<li>切换到 <strong>「基础配置」</strong> 标签页，填写你的博客名称、作者名、站点描述等信息</li>
+<li>切换到 <strong>「个性化」</strong> 标签页，可以调整配色风格</li>
+</ol>
+<p>每个主题还可能有自己的 <strong>「自定义配置」</strong>（第四个标签页），比如社交链接、布局选项等，按需设置即可。</p>
+<hr />
+<h2 id="heading-3">第三步：预览效果</h2>
+<p>点击左侧导航栏底部的 <strong>「预 览」</strong> 按钮。</p>
+<p>Gridea Pro 会自动渲染整个博客站点，然后在浏览器中打开预览。你可以看到文章、主题、导航菜单等所有内容的实际效果。</p>
+<p>每次修改文章或切换主题后，重新点击「预 览」即可看到最新效果。</p>
+<blockquote>
+<p>注意：博客不是实时渲染的，每次修改后都需要再次点击「预 览」才能看到最新效果。</p>
+</blockquote>
+<hr />
+<h2 id="heading-4">第四步：配置部署</h2>
+<p>现在你的博客在本地已经准备好了，接下来配置一个部署平台，把它发布到互联网上。</p>
+<ol>
+<li>点击左侧导航的 <strong>「配 置」</strong></li>
+<li>在 <strong>「平 台」</strong> 下拉框中选择你要使用的部署方式</li>
+</ol>
+<p>Gridea Pro 支持以下平台：</p>
+<h3 id="github-pages">GitHub Pages（推荐新手）</h3>
+<p>免费、全球可访问，配置步骤：</p>
+<ol>
+<li>在 GitHub 上创建一个新仓库（仓库名建议用 <code>你的用户名.github.io</code>）</li>
+<li>前往 GitHub → Settings → Developer settings → <a href="https://github.com/settings/tokens">Personal access tokens</a>，生成一个 Token（勾选 <code>repo</code> 权限）</li>
+<li>回到 Gridea Pro 的「配 置」页面，填写以下信息：
+<ul>
+<li><strong>域 名</strong>：<code>https://你的用户名.github.io</code></li>
+<li><strong>仓库名称</strong>：<code>你的用户名.github.io</code></li>
+<li><strong>分 支</strong>：<code>main</code></li>
+<li><strong>仓库用户名</strong>：你的 GitHub 用户名</li>
+<li><strong>邮 箱</strong>：你的 GitHub 注册邮箱</li>
+<li><strong>令 牌</strong>：刚才生成的 Token</li>
+<li><strong>CNAME</strong>：<code>你购买的个人域名，如：</code>are.ink`（可选，没有可不填）</li>
+</ul>
+</li>
+<li>点击 <strong>「检测远程连接」</strong> 验证配置是否正确</li>
+<li>点击 <strong>「保存」</strong></li>
+</ol>
+<h3 id="vercel">Vercel</h3>
+<p>支持自定义域名，智能增量部署。需要填写 Vercel 项目名称和 Access Token。</p>
+<h3 id="cname">自定义域名（CNAME）</h3>
+<p>如果你有自己的域名（比如 <code>blog.example.com</code>），可以在上面的配置中填写 <strong>CNAME</strong> 字段：</p>
+<ol>
+<li>在你的域名注册商的 DNS 管理后台，添加一条 CNAME 记录，将你的域名指向 <code>你的用户名.github.io</code>（GitHub）或对应的平台域名</li>
+<li>回到 Gridea Pro 的「配 置」页面，将 <strong>域 名</strong> 改为你的自定义域名（如 <code>https://blog.example.com</code>）</li>
+<li>在 <strong>CNAME</strong> 字段中填写你的自定义域名（如 <code>blog.example.com</code>）</li>
+<li>保存后重新同步，GitHub Pages 会自动识别并生效</li>
+</ol>
+<p>如果暂时没有自己的域名，跳过这步即可，后面随时可以配置。</p>
+<hr />
+<h2 id="heading-5">第五步：发布上线</h2>
+<p>一切配置就绪后，点击左侧导航栏底部的 <strong>「同 步」</strong> 按钮（火箭图标）。</p>
+<p>按钮会显示加载动画，等待片刻，看到「同步成功啦！」的提示，说明你的博客已经发布到互联网上了。</p>
+<p>打开浏览器，访问你在第四步填写的域名，就能看到你的博客了。</p>
+<p><strong>以后每次写完新文章或修改配置后，点一下「同 步」就会自动更新。</strong></p>
+<blockquote>
+<p><strong>提示</strong>：Gridea Pro 内置了完整的 Git 引擎，你的电脑上<strong>不需要安装 Git</strong>，填好配置信息后，点击 <strong>「同 步」</strong> 按钮就可以直接发布。</p>
+</blockquote>
+<hr />
+<h2 id="heading-6">更多功能</h2>
+<p>你已经完成了最核心的流程。以下是 Gridea Pro 的其他功能，可以慢慢探索：</p>
+<p><strong>闪 念</strong> — 点击左侧「闪 念」，在输入框中写下你的想法，点击「发布」。支持用 <code>#标签</code> 的方式给速记打标签。左侧有热力图展示你的记录频率。</p>
+<p><strong>菜 单</strong> — 点击左侧「菜 单」，可以自定义博客顶部的导航栏。比如添加「关于」「归档」「标签」等页面链接，也可以添加外部链接。</p>
+<p><strong>友 链</strong> — 点击左侧「友 链」，添加友情链接，和其他博主互相推荐。</p>
+<p><strong>评 论</strong> — 在「配 置」页面中可以设置评论系统（支持 Gitalk、Giscus、Waline、Twikoo 等 7 种方案），让读者可以在你的文章下方留言互动。</p>
+<p><strong>SEO</strong> — 在「配 置」→「SEO」标签页中，可以配置 Google Analytics、百度统计、JSON-LD 结构化数据等，帮助搜索引擎收录你的博客。Sitemap 和 RSS 订阅会自动生成，无需额外配置。</p>
+<p><strong>PWA</strong> — 在「配 置」→「PWA」标签页中，可以将你的博客配置为渐进式 Web 应用。开启后，读者可以把你的博客「添加到主屏幕」，获得接近原生 App 的浏览体验。可以自定义应用名称、主题色和图标。</p>
+<p><strong>CDN</strong> — 在「配 置」→「CDN」标签页中，可以开启图片和静态资源的 CDN 加速。配置好 CDN 仓库后，文章中插入的图片会自动上传到 CDN，加快博客的访问速度，尤其适合图片较多的博客。</p>
+<h2 id="heading-7">公式测试</h2>
+<p>测试 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=mc^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord mathnormal">m</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><br />
+测试 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><msqrt><mrow><mn>2</mn><mi>π</mi><msup><mi>σ</mi><mn>2</mn></msup></mrow></msqrt></mfrac><msup><mi>e</mi><mrow><mo>−</mo><mfrac><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><mrow><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup></mrow></mfrac></mrow></msup></mrow><annotation encoding="application/x-tex">f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.8671em;vertical-align:-0.538em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.5154em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9638em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mtight" style="padding-left:0.833em;"><span class="mord mtight">2</span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463em;"><span style="top:-2.786em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.9238em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail mtight" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.0762em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.538em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.3291em;"><span style="top:-3.4534em;margin-right:0.05em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight"><span class="mopen nulldelimiter sizing reset-size3 size6"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.251em;"><span style="top:-2.5062em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9384em;"><span style="top:-2.9384em;margin-right:0.1em;"><span class="pstrut" style="height:2.6444em;"></span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.2255em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line mtight" style="border-bottom-width:0.049em;"></span></span><span style="top:-3.5021em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">x</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight">μ</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.0484em;"><span style="top:-3.0484em;margin-right:0.1em;"><span class="pstrut" style="height:2.6444em;"></span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4938em;"><span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+<h2 id="mcp---ai-">彩蛋：MCP — 用 AI 管理你的博客</h2>
+<p>这是 Gridea Pro 最独特的能力之一。</p>
+<p>Gridea Pro 内置了完整的 <a href="https://modelcontextprotocol.io/">MCP（Model Context Protocol）</a> 服务，这意味着你可以通过 AI 助手（如 Claude Desktop、Cursor、Claude Code 等任何支持 MCP 协议的客户端）直接与你的博客对话。</p>
+<p>你可以用自然语言让 AI 帮你：</p>
+<ul>
+<li><strong>写文章</strong> — 「帮我写一篇关于 Vue 3 组合式 API 的入门教程，标签设为 Vue 和前端」</li>
+<li><strong>管理内容</strong> — 「把所有标签为&quot;草稿&quot;的文章列出来」「删除上个月的测试文章」</li>
+<li><strong>记录闪念</strong> — 「记一条速记：今天学会了 Go 的 channel 用法」</li>
+<li><strong>配置站点</strong> — 「把博客名称改为&quot;我的技术笔记&quot;」「切换到 flavor-theme 主题」</li>
+<li><strong>发布部署</strong> — 「渲染站点并部署到 GitHub Pages」</li>
+</ul>
+<p>总共提供了 30+ 个 AI 可调用的工具，覆盖文章、标签、分类、菜单、友链、闪念、主题、设置、渲染和部署的完整管理。你不需要打开 Gridea Pro 的界面，在 AI 对话框里就能完成几乎所有操作。</p>
+<p>配置方式很简单。以 Claude Desktop 为例，打开 Settings → Developer → Edit Config，在 <code>mcpServers</code> 中添加：</p>
+<p><strong>macOS：</strong></p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;gridea-pro&quot;: {
+      &quot;command&quot;: &quot;/Applications/Gridea Pro.app/Contents/MacOS/gridea-pro-mcp&quot;,
+      &quot;env&quot;: {
+        &quot;SOURCE_DIR&quot;: &quot;/Users/你的用户名/Documents/Gridea Pro&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>Windows：</strong></p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;gridea-pro&quot;: {
+      &quot;command&quot;: &quot;C:\\Program Files\\Gridea Pro\\gridea-pro-mcp.exe&quot;,
+      &quot;env&quot;: {
+        &quot;SOURCE_DIR&quot;: &quot;C:\\Users\\你的用户名\\Documents\\Gridea Pro&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<ul>
+<li><strong>command</strong> — <code>gridea-pro-mcp</code> 二进制文件的路径</li>
+<li><strong>SOURCE_DIR</strong> — 你的博客数据目录路径</li>
+<li><strong>DEPLOY_ENABLED</strong> — 是否允许 AI 执行发布/同步操作（可选，默认关闭）</li>
+</ul>
+<p>默认情况下，AI 只能帮你写文章、管理内容，<strong>不能</strong>直接发布到线上。如果你信任 AI 并希望它能帮你一键发布，在 <code>env</code> 中加上 <code>&quot;DEPLOY_ENABLED&quot;: &quot;true&quot;</code> 即可开启。建议熟悉流程后再开启。</p>
+<p>保存后重启 Claude Desktop，就可以在对话中直接管理你的博客了。它通过本地管道通信，不需要网络、不需要端口、不需要认证，数据始终在你的电脑上。</p>
+<hr />
+<p>看到这里，相信你对 Gridea Pro 的使用已经有了全面的了解。</p>
+<p>这篇指南可以随时删除。祝你博客之旅愉快！</p>
+
+  </div>
+
+  
+  <footer class="post-footer">
+    <div class="post-taxonomy-group">
+      <span class="post-tags-label" data-i18n="nav.tags">Tags</span>
+      <div class="post-tags">
+        
+          <a class="taxon-chip taxon-chip--tag" href="/tag/gridea-pro/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59A2 2 0 0 0 3.83 11l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><path d="M7 7h.01"/></svg>
+            <span>Gridea Pro</span>
+          </a>
+        
+          <a class="taxon-chip taxon-chip--tag" href="/tag/getting-started/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59A2 2 0 0 0 3.83 11l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><path d="M7 7h.01"/></svg>
+            <span>入门</span>
+          </a>
+        
+      </div>
+    </div>
+  </footer>
+  
+
+  
+
+<nav class="post-nav" aria-label="Post navigation">
+  
+  <a class="post-nav-card post-nav-prev" href="/post/mDI11L/" rel="prev">
+    <div class="post-nav-body">
+      <p class="post-nav-label">
+        <svg class="post-nav-arrow post-nav-arrow-prev" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+        <span data-i18n="post.previous">上一篇</span>
+      </p>
+      <p class="post-nav-title">Astra Pro深度相机折腾记</p>
+    </div>
+  </a>
+  
+
+  
+  <a class="post-nav-card post-nav-next" href="/post/1vZUXz/" rel="next">
+    <div class="post-nav-body">
+      <p class="post-nav-label">
+        <span data-i18n="post.next">下一篇</span>
+        <svg class="post-nav-arrow post-nav-arrow-next" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+      </p>
+      <p class="post-nav-title">Intelligent Construction Site Safety Report Generator</p>
+    </div>
+  </a>
+  
+</nav>
+
+
+
+  
+<section
+  class="comments-wrap"
+  data-twikoo-root
+  data-env-id="https://vueblog.xiaoayu.eu.org/"
+  data-lang="zh-CN"
+>
+  <h2 class="comments-title" data-i18n="post.comments">Comments</h2>
+  <div id="tcomment"></div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var twikooRoot = document.querySelector('[data-twikoo-root]');
+  if (!twikooRoot) return;
+
+  var envId = twikooRoot.getAttribute('data-env-id') || '';
+  var lang = twikooRoot.getAttribute('data-lang') || 'zh-CN';
+  if (!envId) return;
+
+  function initTwikoo() {
+    if (!window.twikoo) return;
+    window.twikoo.init({
+      envId: envId,
+      el: '#tcomment',
+      lang: lang,
+      path: window.location.pathname
+    });
+  }
+
+  if (window.twikoo) {
+    initTwikoo();
+    return;
+  }
+
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js';
+  script.async = true;
+  script.onload = initTwikoo;
+  document.body.appendChild(script);
+});
+</script>
+
+
+</article>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const content = document.getElementById('post-content');
+  const tocList = document.getElementById('toc-list');
+  if (!content || !tocList) return;
+  const headings = content.querySelectorAll('h2, h3');
+  
+  if (headings.length === 0) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach((heading, index) => {
+    const id = 'heading-' + index;
+    heading.setAttribute('id', id);
+    
+    const link = document.createElement('a');
+    link.href = '#' + id;
+    link.className = 'toc-link';
+    if (heading.tagName === 'H3') link.style.paddingLeft = '16px';
+    link.textContent = heading.textContent;
+    
+    tocList.appendChild(link);
+  });
+
+  // Simple scroll spy
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-100px 0px -66%' });
+
+  headings.forEach(h => observer.observe(h));
+});
+</script>
+
+        </main>
+        <footer class="site-footer">
+          <div class="footer-inner">
+  <div class="footer-left">
+    
+      © <time id="footer-year"></time>
+      <a href="/" class="footer-author">KELE++</a>.
+      <span data-i18n="footer.rights">All rights reserved.</span>
+    
+  </div>
+  
+  <div class="footer-right">
+    
+      
+        <span data-i18n="footer.poweredBy">Powered by</span>
+        <a href="https://www.gridea.pro/" target="_blank" rel="noopener">Gridea Pro</a>.
+      
+      <span data-i18n="footer.theme">Theme</span>
+      <a href="https://github.com/Sunhaha520/Chirpy-Gridea" target="_blank" rel="noopener">Chirpy-Gridea</a>
+    
+  </div>
+</div>
+
+        </footer>
+      </div>
+
+      <aside class="panel-rail" id="panel-rail">
+        
+<div class="toc-container" id="toc-container">
+  <h2 class="toc-title" data-i18n="toc.title">Table of Contents</h2>
+  <nav class="toc-list" id="toc-list"></nav>
+</div>
+
+      </aside>
+    </div>
+  </div>
+</div>
+
+<button class="back-to-top" id="back-to-top" type="button" aria-label="返回顶部" data-i18n-aria="ui.backToTop">↑</button>
+
+<!-- Search Modal -->
+<div class="search-modal" id="search-modal">
+  <div class="search-modal-content">
+    <div class="search-modal-header">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="search-input" placeholder="搜索站内内容..." aria-label="搜索">
+      <button class="search-modal-close" id="search-close" type="button">Esc</button>
+    </div>
+    <div class="search-modal-results" id="search-results">
+      <div class="search-no-results">输入关键词开始搜索...</div>
+    </div>
+    <div class="search-modal-footer">
+      <div class="search-hints">
+        <span><kbd>↵</kbd> 选择</span>
+        <span><kbd>↑↓</kbd> 切换</span>
+        <span><kbd>Esc</kbd> 关闭</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="search-source" hidden>
+  
+    
+    <article
+      class="search-source-item"
+      data-link="/post/guan-yu-r36syou-xi-zhang-ji-de-yi-qie/"
+      data-date="2026-06-23"
+    >
+      <h3 class="search-source-title">关于R36S游戏掌机的一切</h3>
+      <p class="search-source-abstract">
+        
+          最近入手了一部寨版R36S掌机，通过几天的折腾，还是建议大家买正版。本文结合handhelds.wiki中的内容，进行了一些翻译和总结，并对一些资源做了统一的整理。
+        
+      </p>
+    </article>
+    
+    <article
+      class="search-source-item"
+      data-link="/post/about/"
+      data-date="2026-06-23"
+    >
+      <h3 class="search-source-title">关于</h3>
+      <p class="search-source-abstract">
+        
+          互联网技术野生观察员
+        
+      </p>
+    </article>
+    
+    <article
+      class="search-source-item"
+      data-link="/post/gx4dL0/"
+      data-date="2025-08-08"
+    >
+      <h3 class="search-source-title">从零构建：途虎养车数据爬虫实战指南</h3>
+      <p class="search-source-abstract">
+        
+          本文将以途虎养车平台为例，搭建一个高效、稳定的爬虫系统。内容涵盖从需求分析、技术选型到反爬策略应对的全流程，并提供可复用的代码示例与架构设计思路。
+        
+      </p>
+    </article>
+    
+    <article
+      class="search-source-item"
+      data-link="/post/mAayTs/"
+      data-date="2025-07-26"
+    >
+      <h3 class="search-source-title">基于摄影测量的跨房间点云配准与重建精度研究</h3>
+      <p class="search-source-abstract">
+        
+          摄影测量技术在单体房间三维重建中表现良好，然而实际建筑环境多为多房间连通结构。本文旨在探究摄影测量方法在跨房间三维重建中的性能表现，重点分析其重建房间连接处的效果。
+        
+      </p>
+    </article>
+    
+    <article
+      class="search-source-item"
+      data-link="/post/mDI11L/"
+      data-date="2025-07-11"
+    >
+      <h3 class="search-source-title">Astra Pro深度相机折腾记</h3>
+      <p class="search-source-abstract">
+        
+          最近在闲鱼花了45元淘了台深度相机，折腾出一套3D目标检测系统：用YOLOv8识别物体，结合深度信息生成3D边界框，Open3D可视化点云。踩了不少坑，在此记录一下。
+        
+      </p>
+    </article>
+    
+    <article
+      class="search-source-item"
+      data-link="/post/quick-start/"
+      data-date="2025-06-09"
+    >
+      <h3 class="search-source-title">Gridea Pro上手指南 </h3>
+      <p class="search-source-abstract">
+        
+          这篇指南会带你一步一步熟悉 Gridea Pro 的界面和操作，从写第一篇文章到把博客发布到互联网上。
+        
+      </p>
+    </article>
+    
+    <article
+      class="search-source-item"
+      data-link="/post/1vZUXz/"
+      data-date="2024-11-14"
+    >
+      <h3 class="search-source-title">Intelligent Construction Site Safety Report Generator</h3>
+      <p class="search-source-abstract">
+        
+          Intelligent construction site safety report generator using YOLO and GPT-4 for automated image an...
+        
+      </p>
+    </article>
+    
+    <article
+      class="search-source-item"
+      data-link="/post/ez7Iga/"
+      data-date="2024-09-20"
+    >
+      <h3 class="search-source-title">Simple Stack - A Foolproof Stacking Software for MAC</h3>
+      <p class="search-source-abstract">
+        
+          This is a stacking software developed by Ke Lejun in his spare time, specifically for use on MAC.
+        
+      </p>
+    </article>
+    
+    <article
+      class="search-source-item"
+      data-link="/post/6mf98u/"
+      data-date="2024-09-17"
+    >
+      <h3 class="search-source-title">Usage of the Hong Kong University Architectural Dataset</h3>
+      <p class="search-source-abstract">
+        
+          The Hong Kong University Architectural Dataset is a project of my advisor, used for training mode...
+        
+      </p>
+    </article>
+    
+  
+</div>
+
+<script src="/scripts/i18n-boot.js"></script>
+<script src="/scripts/main.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js" defer></script>
+
+<!-- KaTeX math rendering removed to match cactus rendering behavior -->
+
+
+
+<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: Chirpy-Gridea v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>
+

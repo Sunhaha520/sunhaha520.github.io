@@ -1,0 +1,1524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KELE++</title>
+    <link>https://sunhaha520.github.io/</link>
+    <description>Welcome to my blog!</description>
+    <language>zh-cn</language>
+    <generator>Gridea Pro</generator>
+    <lastBuildDate>Thu, 25 Jun 2026 00:26:46 +0800</lastBuildDate>
+    <atom:link href="https://sunhaha520.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
+    <item>
+      <title>关于R36S游戏掌机的一切</title>
+      <link>https://sunhaha520.github.io/post/guan-yu-r36syou-xi-zhang-ji-de-yi-qie/</link>
+      <guid isPermaLink="true">https://sunhaha520.github.io/post/guan-yu-r36syou-xi-zhang-ji-de-yi-qie/</guid>
+      <pubDate>Tue, 23 Jun 2026 22:22:35 +0800</pubDate>
+      <description><![CDATA[<p>最近入手了一部寨版R36S掌机，通过几天的折腾，还是建议大家买正版。本文结合handhelds.wiki中的内容，进行了一些翻译和总结，并对一些资源做了统一的整理。</p>
+<!-- more -->
+<h2 id="emuelec-">EmuELEC 克隆版</h2>
+<h3 id="heading">如何辨别山寨机</h3>
+<p><strong>已知的软硬件差异及识别EmuELEC克隆变种的方法：</strong></p>
+<ul>
+<li><strong>多数克隆版无需SD卡即可启动​</strong>​ —— 会显示错误信息“We can&rsquo;t find any systems!”</li>
+<li>​<strong>​仅有一颗内存芯片（若为透明外壳的R36S，无需拆机即可观察）​</strong>​<br />
+<em>注意：新版克隆机（G80D主板）已改为与原版相同的双内存芯片</em></li>
+<li>​<strong>​部分克隆版内存仅512MB​</strong>​</li>
+<li>​<strong>​无法运行标准ArkOS/AmberELEC​</strong>​ —— 黑屏并伴随红灯闪烁</li>
+<li>​<strong>​SD卡内的dtb文件不同​</strong>​，常见克隆版文件包括：<br />
+<code>rk3326-evb-lp3-v12-linux.dtb</code><br />
+<code>rf3536k4ka.dtb</code><br />
+<code>rf3536k3ka.dtb</code></li>
+<li>​<strong>​部分克隆版搭载EmuELEC ES V4.7系统​</strong>​（与Gaminja/Kinhank K36同款固件）</li>
+<li>​<strong>​分区命名差异​</strong>​：克隆版可能显示为<code>EMUELEC</code>或<code>EEROMS</code>而非原版的<code>EASYROMS</code></li>
+<li>​<strong>​启动时缺少ArkOS 2.0版本日期提示​</strong>​（部分克隆版）</li>
+<li>​<strong>​关机状态下显示充电动画​</strong>​（部分克隆版）</li>
+<li>​<strong>​异常启动流程​</strong>​（部分克隆版）</li>
+<li>​<strong>​无WiFi功能​</strong>​ —— 部分克隆版不支持WiFi外接设备</li>
+<li>​<strong>​FN键被映射到Y键​</strong>​（可能是软件问题？）</li>
+<li>​<strong>​音量孔差异​</strong>​：原版孔洞更大更厚，克隆版通常较细密</li>
+<li>​<strong>​按键字体异常​</strong>​：如X键字母歪斜/细瘦（部分克隆版）</li>
+<li>​<strong>​系统内存显示异常​</strong>​：在RetroArch系统信息中显示为497MB（路径：retroarch &gt; 返回主菜单 &gt; 信息 &gt; 系统）</li>
+</ul>
+<p><strong>带内置存储的EmuELEC克隆变种​</strong>​</p>
+<ul>
+<li>​<strong>​系统安装在板载存储（eMMC）中​</strong>​</li>
+<li>​<strong>​不兼容K36或克隆版ArkOS固件镜像​</strong>​</li>
+<li>​<strong>​采用性能较弱的RK3128芯片（非原版RK3326）​</strong>​</li>
+<li>​<strong>​游戏添加方法​</strong>​</li>
+<li>​<strong>​R36S内置文件（核心文件、游戏列表）​</strong></li>
+</ul>
+<p><strong>​为什么克隆机不好​</strong>​</p>
+<ul>
+<li>​<strong>​多数克隆固件仍存在双SD卡兼容问题​</strong>​</li>
+<li>​<strong>​大量用户反馈音频输出异常和按键映射颠倒​</strong>​</li>
+<li>​<strong>​部分克隆机内存缩水（512MB而非1GB）​</strong>​</li>
+<li>​<strong>​部分克隆机采用性能更弱的RK3128芯片（非原版RK3326）​</strong>​</li>
+<li>​<strong>​存在内部硬件完全不同的克隆机（性能比RK3128还差）且完全不支持自制固件​</strong>​</li>
+<li>​<strong>​许多用户反映G80主板克隆机难以刷入第三方固件​</strong>​</li>
+<li>​<strong>​若丢失SD卡，需尝试多达10种不同的屏幕驱动文件（dtb）才能恢复​</strong>​​</li>
+</ul>
+<h3 id="emuelec">EmuELEC克隆版刷机固件</h3>
+<h4 id="arkos">ArkOS</h4>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ArkOS for EmuELEC克隆设备</strong></td>
+<td><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/05b86c926113e876a579d69dbe8f9b9255e42f2f/345420723-1ba003f0-4926-4add-885b-67c41cc1c1f6.png" alt="封面图" /></td>
+</tr>
+<tr>
+<td><strong>描述</strong></td>
+<td>由AeolusUX维护的ArkOS社区版，适用于K36掌机及同类克隆设备(R36S克隆版/K36/R36 Pro/R36 Max/U8掌机/RX6H)</td>
+</tr>
+<tr>
+<td><strong>最新版本</strong></td>
+<td><a href="https://github.com/AeolusUX/ArkOS-K36"><img src="https://raster.shields.io/github/v/release/AeolusUX/ArkOS-K36.png" alt="版本" /></a></td>
+</tr>
+<tr>
+<td><strong>下载链接</strong></td>
+<td>• <a href="https://github.com/AeolusUX/ArkOS-K36">GitHub主镜像</a><br>• <a href="https://github.com/AeolusUX/K36-DTB">DTB文件库</a></td>
+</tr>
+<tr>
+<td><strong>使用说明</strong></td>
+<td>• 查看<a href="https://www.reddit.com/r/R36S/comments/1hhn15r/arkos_for_k36_and_r36s_clones/">Reddit讨论帖</a><br>• 阅读<a href="https://github.com/AeolusUX/ArkOS-K36/releases">GitHub发布说明</a><br>⚠️ <strong>不建议使用双SD卡配置</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="dtb">黑屏/无声问题修复与dtb文件</h4>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>问题描述</strong></td>
+<td>刷入自定义固件后若出现异常，需更换SD卡BOOT分区的这些文件。若无声，请进入Ports运行&quot;audio fix permanent&quot;</td>
+</tr>
+<tr>
+<td><strong>解决方案</strong></td>
+<td>1. <a href="https://github.com/AeolusUX/K36-DTB">⬇️ K36及同类克隆设备专用dtb文件库</a><br>2. 按顺序尝试不同dtb文件</td>
+</tr>
+<tr>
+<td><strong>替代音频修复方案</strong></td>
+<td><a href="https://drive.google.com/drive/folders/1kOStwUgtx6K1sU3b7zmU1zpicL8Xp9sX">⬇️ 按dtb文件名下载对应修复包</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>操作须知</strong>：<br></p>
+<ul>
+<li>每个dtb文件需单独测试效果<br></li>
+<li>音频修复文件需与当前dtb文件匹配使用<br></li>
+<li>建议在操作前备份原始文件</li>
+</ul>
+</blockquote>
+<h4 id="rocknix">ROCKNIX</h4>
+<p>官方ROCKNIX现已支持克隆设备，请使用下载页面中标注 <strong>&ldquo;b&quot;版本</strong> 的固件。</p>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/9aa88c9b6e396b9f840110bbbd1e7e57376ae447/450px-345426124-486c32e2-ee2f-491f-9205-24d8bc6fc075.png" alt="ROCKNIX" /></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>固件说明</strong></td>
+<td>官方ROCKNIX现已支持克隆设备，请使用下载页面中带&quot;b&quot;标记的版本</td>
+</tr>
+<tr>
+<td><strong>下载链接</strong></td>
+<td>• <a href="https://rocknix.gosk.in/dtbo/">dtb文件修补工具</a><br>• <a href="https://nightly.rocknix.org/">夜间构建版下载</a></td>
+</tr>
+<tr>
+<td><strong>文件命名示例</strong></td>
+<td><code>ROCKNIX-RK3326.aarch64-20250430-b.img.gz</code></td>
+</tr>
+<tr>
+<td><strong>使用指南</strong></td>
+<td>1. 下载带&quot;b&quot;后缀的固件<br>2. 使用工具修改dtb文件<br>3. 参考<a href="https://rocknix.org/">ROCKNIX Wiki</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>仅适用于RK3326等特定克隆设备</li>
+<li>&ldquo;b&quot;版本修复了以下问题：
+<ul>
+<li>内存识别异常</li>
+<li>按键映射错误</li>
+<li>双SD卡槽兼容性</li>
+</ul>
+</li>
+<li>建议使用Etcher工具刷写固件</li>
+</ul>
+</blockquote>
+<h4 id="unofficialos">UnofficialOS</h4>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/9f385c7f2f36e23b0c34e0c95b2cc375eed43097/450px-345426647-c9272deb-5e12-499d-82ae-b19ed63de5fb.png" alt="UnofficialOS" /></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>固件说明</strong></td>
+<td>专为R36S克隆设备定制的非官方固件</td>
+</tr>
+<tr>
+<td><strong>下载链接</strong></td>
+<td><a href="https://github.com/RetroGFX/UnofficialOS/releases">⬇️ GitHub发布页</a></td>
+</tr>
+<tr>
+<td><strong>使用教程</strong></td>
+<td><a href="https://github.com/RetroGFX/UnofficialOS/wiki/Clone-and-R3xS-Instructions">克隆设备与R3xS系列安装指南</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>版本特性</strong>：</p>
+<ul>
+<li>优化克隆设备性能表现</li>
+<li>修复常见兼容性问题</li>
+<li>提供定制化功能选项</li>
+</ul>
+</blockquote>
+<h4 id="retros">RetrOS</h4>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/b78094d874aed87d43f89e8eb0b189868f564f7a/600px-Retros_firmware.png" alt="RetrOS标志" /></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>固件说明</strong></td>
+<td>专为R36S克隆设备设计的混合型定制固件</td>
+</tr>
+<tr>
+<td><strong>下载链接</strong></td>
+<td><a href="https://github.com/dmikey/retros">⬇️ GitHub仓库</a> - <a href="https://mega.nz/file/7sABGLoJ#Fw7Yx9VQ3KhYL8dy1KE8RItUIrB7xSwjRnwRGqv4l3g">⬇️ MEGA网盘</a></td>
+</tr>
+<tr>
+<td><strong>版本信息</strong></td>
+<td>RetrOS-preview1.img (早期开发测试版)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>固件特点</strong>：</p>
+<ul>
+<li>专为克隆设备优化的混合架构</li>
+<li>提供更好的硬件兼容性</li>
+<li>早期预览版包含基础功能</li>
+</ul>
+</blockquote>
+<h4 id="heading-1">总结</h4>
+<p>上面的四个系统全部测试过，都可以在我的寨版上运行。且支持Ports移植游戏。</p>
+<h2 id="heading-2">我的版本</h2>
+<p>我的是G80C主板版本，具体型号是G80CA-MB V1.2-20250422，首次发布在2025年5月，无eMMC存储的EmuELEC克隆版本。该设备应兼容<a href="https://github.com/AeolusUX/K36-DTB/tree/main/Panel%208">Panel 8</a>或<a href="https://github.com/AeolusUX/K36-DTB/tree/main/Panel%209">Panel 9</a>的dtb文件。（<a href="https://www.dropbox.com/scl/fo/utn5woz99540fs4gasaf0/AIxhV1qjyriPQS4saQ6VG9A?rlkey=num1jltfhs92133z4vh3pfuge&amp;e=1&amp;st=zgjmsn5z&amp;dl=0">备选下载链接</a>）<br />
+<a href="https://www.reddit.com/r/R36S/comments/1lb8fjs/so_i_knowingly_got_a_clone_for_tinkering_and_it/">Reddit讨论帖</a></p>
+<h2 id="heading-3">游戏等其他资源</h2>
+<ul>
+<li>各外贸系统原装ROM：<a href="https://pan.baidu.com/s/1Zv344xDEY_W5OUbwFREpWA?pwd=FK45">百度网盘</a></li>
+<li>arkos通用魔改补丁链接：<a href="https://pan.baidu.com/s/17cMHEOzD1yp1peaWP7WkeQ?dp-logid=29769900344165010002&amp;pwd=arko#/home/%2F/%2F">百度网盘</a>提取码arko</li>
+<li>游戏包合集：<a href="https://pan.baidu.com/s/1Uz1MQWNDrXGIkhEoXZY3qg?pwd=e2P6">百度网盘</a></li>
+<li>世嘉DC游戏1257款：<a href="https://pan.baidu.com/s/1u-psKXvcRu1VnMO4E1B7aw?pwd=67k3">百度网盘</a></li>
+<li>右手游戏资源：<a href="https://pan.baidu.com/s/1TbGMWUebtS-l2QRMEI6-Fw?pwd=nR4N">百度网盘</a></li>
+<li>windstarry大佬移植的ports游戏：<a href="https://pan.baidu.com/share/init?surl=c0wGlP2AFODkpr-FDi9bSw&amp;pwd=vryz">百度网盘</a></li>
+<li>寨中寨EE4.7通用游戏包128G-2025：<a href="https://pan.baidu.com/s/12Qge37eGt-d--H_XnzxeFw?pwd=s3bB">百度网盘</a></li>
+<li>游戏资源下载地址：www.oldmantvg.net/</li>
+<li>主题资源下载地址：https://handhelds.wiki/R36S_Clones</li>
+<li>各种寨机型号整合包合集：<a href="https://pan.baidu.com/s/1NilR9YAqrR4TJAolBo9F9Q?pwd=BMX9">百度网盘</a></li>
+</ul>
+]]></description>
+      <category>捣鼓</category>
+      <enclosure url="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/67ec16f4f98d809ff767f8560b2104d2b443d3c2/Canvas-Ruom.webp" length="0" type="image/webp"></enclosure>
+    </item>
+    <item>
+      <title>从零构建：途虎养车数据爬虫实战指南</title>
+      <link>https://sunhaha520.github.io/post/gx4dL0/</link>
+      <guid isPermaLink="true">https://sunhaha520.github.io/post/gx4dL0/</guid>
+      <pubDate>Fri, 08 Aug 2025 16:30:49 +0800</pubDate>
+      <description><![CDATA[<p>本文将以途虎养车平台为例，搭建一个高效、稳定的爬虫系统。内容涵盖从需求分析、技术选型到反爬策略应对的全流程，并提供可复用的代码示例与架构设计思路。</p>
+<!-- more -->
+<h2 id="heading">前言</h2>
+<p>最近，由于需要了解汽车滤芯更换套餐的市场行情，我决定通过爬虫技术从途虎养车平台采集相关数据。选择途虎养车作为目标平台主要有两个原因：</p>
+<ol>
+<li>​<strong>​行业地位​</strong>​：途虎养车是国内领先的汽车后市场服务平台，拥有丰富的商品和服务数据，具有较高的参考价值。</li>
+<li>​<strong>​技术可行性​</strong>​：与其他完全依赖APP的汽车服务平台不同，途虎仍然维护了网页端服务，使得数据抓取成为可能。</li>
+</ol>
+<p>在调研过程中，我发现途虎的网页端仍然可用：<a href="https://wx.tuhu.cn/vue/wx/pages/">途虎养车网页版</a>，这为后续的爬虫开发提供了便利。</p>
+<h2 id="heading-1">链接抓取</h2>
+<p>为了分析途虎养车的数据请求，我们可以使用浏览器的开发者工具进行抓包。首先在Chrome或Firefox中打开途虎养车网页端（<a href="https://wx.tuhu.cn/vue/wx/pages/">途虎养车手机版</a>），按下<code>F12</code>键调出开发者工具，切换到Network面板（网络）并确保选中All选项。</p>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/raw/main/Picture/20250808022357810.png" alt="开发者模式" /></p>
+<p>在正式抓取数据前，我们需要先完成几个关键操作步骤。首先登录途虎养车账号，在个人中心选择对应的车辆信息，然后进入&quot;保养&quot;服务页面。待页面完全加载后，系统会展示各类保养套餐信息。此时开发者工具已经记录了所有网络请求，我们需要特别关注那些返回JSON格式数据的API接口，这些往往包含我们需要的核心信息。</p>
+<p>对于初学者来说，可以通过逐个查看接口的响应内容来定位目标数据。以当前页面为例，在Network面板中筛选请求后，可以清楚地看到返回的JSON数据中包含了我们所需的保养套餐详情，包括项目名称、价格、维护项目以及使用产品等关键字段。这个发现过程为后续编写爬虫代码提供了明确的数据接口定位。</p>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/raw/main/Picture/20250808023320776.png" alt="目标链接" /></p>
+<p>我们可以通过以下方式获取目标链接：在开发者工具的Network面板中，找到包含所需数据的请求后，直接双击该请求行，浏览器会自动在新标签页中打开该请求的响应内容。此时地址栏显示的URL就是我们需要的目标API链接，这个链接将作为后续爬虫程序直接请求的数据接口。</p>
+<h2 id="heading-2">链接分析</h2>
+<p>我们获得了以下链接：</p>
+<pre><code class="language-txt">https://maint-api.tuhu.cn/apinew/GetBaoYangAppPackages?channel=kH5&amp;activityId=&amp;city=上海市&amp;province=上海市&amp;lngBegin=119.80062593300364&amp;latBegin=33.14440913557059&amp;vehicle={&quot;CarId&quot;:&quot;ba12c20d-9256-4117-bade-47d47b68e822&quot;,&quot;PaiLiang&quot;:&quot;电动&quot;,&quot;OnRoadTime&quot;:&quot;&quot;,&quot;VehicleId&quot;:&quot;VE-TSLY&quot;,&quot;tireSize&quot;:&quot;&quot;,&quot;Properties&quot;:[],&quot;Nian&quot;:&quot;2025&quot;,&quot;Distance&quot;:0,&quot;Tid&quot;:&quot;160821&quot;}&amp;baoYangTypes=&amp;isDefaultExpand=true&amp;userId=0bdf60a3-ff01-459d-8621-de160851eed8&amp;productIds=
+</code></pre>
+<p>我们需要深入解析这个API链接的结构，以确定哪些参数是必须的、哪些是可选的，从而构建出可批量爬取的请求链接。通过拆解这个URL，我们可以清晰地看到途虎养车API的参数设计逻辑：</p>
+<h3 id="heading-3">核心参数分类说明</h3>
+<ol>
+<li>​<strong>​基础定位参数​</strong>​
+<ul>
+<li><code>city/province</code>：省市信息（需URL编码）</li>
+<li><code>lngBegin/latBegin</code>：经纬度坐标（支持6位小数）</li>
+<li>示例：<code>city=上海</code> → <code>city=%E4%B8%8A%E6%B5%B7</code></li>
+</ul>
+</li>
+<li>​<strong>​车辆身份参数​</strong>​
+<pre><code class="language-json">{
+  &quot;CarId&quot;: &quot;ba12c20d-...&quot;,  // 车辆唯一标识
+  &quot;VehicleId&quot;: &quot;VE-TSLY&quot;,    // 车型编码
+  &quot;PaiLiang&quot;: &quot;电动&quot;,        // 动力类型
+  &quot;Nian&quot;: &quot;2025&quot;            // 年款
+}
+</code></pre>
+</li>
+<li>​<strong>​用户会话参数​</strong>​
+<ul>
+<li><code>userId</code>：用户唯一标识（32位UUID格式）</li>
+<li><code>channel</code>：渠道标识（kH5表示H5页面）</li>
+</ul>
+</li>
+<li>​<strong>​业务筛选参数​</strong>​
+<ul>
+<li><code>baoYangTypes</code>：保养类型过滤</li>
+<li><code>productIds</code>：指定商品ID查询</li>
+</ul>
+</li>
+</ol>
+<p>首先观察基础URL部分：<code>https://maint-api.tuhu.cn/apinew/GetBaoYangAppPackages</code>，这是所有请求的入口端点。紧随其后的问号表示开始查询参数，这些参数使用标准的key=value格式，以&amp;符号分隔。在这些参数中，有些是必填的核心参数，有些则是可选的辅助参数。</p>
+<h4 id="heading-4">必填参数包括：</h4>
+<ul>
+<li>地理位置参数：<code>city</code>和<code>province</code>需要填写具体的省市名称，建议使用URL编码格式</li>
+<li>车辆标识参数：<code>vehicle</code>是一个JSON字符串，必须包含有效的<code>CarId</code>等车辆信息</li>
+<li>用户标识：<code>userId</code>虽然是UUID格式，但在未登录状态下可以使用默认值</li>
+</ul>
+<h4 id="heading-5">可选参数包括：</h4>
+<ul>
+<li>坐标参数：<code>lngBegin</code>和<code>latBegin</code>可以留空或使用默认值</li>
+<li>筛选参数：<code>baoYangTypes</code>和<code>productIds</code>可以留空获取全部结果</li>
+<li>活动参数：<code>activityId</code>通常可以留空</li>
+</ul>
+<p>特别需要注意的是<code>channel=kH5</code>这个参数，它标识请求来源，保持这个值可以避免一些反爬检测。在实际批量爬取时，我们主要需要动态替换的参数是<code>city</code>、<code>province</code>和<code>vehicle</code>中的车辆信息，其他参数可以保持固定值。通过这种参数分析，我们就可以设计出可批量请求的URL模板，只需替换关键参数即可获取不同地区、不同车型的保养套餐数据。</p>
+<h2 id="heading-6">必要参数获取</h2>
+<p>这一步将使用Python去获得目标参数，并解决途虎平台&quot;最多只能添加5辆车&quot;的限制问题。我们需要做以下几步：</p>
+<ol>
+<li>获取途虎养车的品牌、车型、排量等基础数据</li>
+<li>绕过5辆车限制实现大批量数据爬取</li>
+<li>构建有效的API请求</li>
+<li>处理和存储爬取结果<br />
+爬取流程如下：</li>
+</ol>
+<pre><code class="language-mermaid">flowchart TD
+    A([开始]) --&gt; B[加载配置参数]
+    B --&gt; C{输入文件存在?}
+    C --&gt;|否| D[输出错误]
+    C --&gt;|是| E[读取数据]
+    E --&gt; F[加载车辆ID]
+    F --&gt; G[遍历车型]
+    G --&gt; H{已爬取?}
+    H --&gt;|是| G
+    H --&gt;|否| I[提取信息]
+    I --&gt; J[生成链接]
+    J --&gt; K{成功?}
+    K --&gt;|否| L[记录错误]
+    K --&gt;|是| M[请求数据]
+    M --&gt; N{成功?}
+    N --&gt;|否| L
+    N --&gt;|是| O[解析数据]
+    O --&gt; P[提取信息]
+    P --&gt; Q[保存结果]
+    Q --&gt; R{还有车型?}
+    R --&gt;|是| G
+    R --&gt;|否| S[输出完成]
+    S --&gt; T([结束])
+</code></pre>
+<h3 id="heading-7">环境准备</h3>
+<h4 id="heading-8">安装必要库</h4>
+<pre><code class="language-bash">pip install requests
+</code></pre>
+<h3 id="heading-9">核心代码解析</h3>
+<h3 id="heading-10">配置参数</h3>
+<pre><code class="language-python"># 基本配置
+USER_ID = &quot;0bdf60a3-ff01-459d-8621-de160851eed8&quot;  # 用户ID
+CITY = &quot;上海市&quot;  # 默认城市
+PROVINCE = &quot;上海市&quot;  # 默认省份
+
+# 请求控制
+RETRY_COUNT = 3  # 请求重试次数
+DELAY_BETWEEN_REQUESTS = 3  # 请求间隔时间(秒)
+</code></pre>
+<h3 id="heading-11">请求头设置</h3>
+<pre><code class="language-python">headers = {
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0...&quot;,
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+    &quot;Authorization&quot;: &quot;Bearer 204576661ec744519fcd3c2714a850ad&quot;,
+    # 其他必要headers...
+}
+</code></pre>
+<p>请求头在爬虫中的作用至关重要，它就像是网络请求的身份证和通行证，决定了服务器是否会接受并响应你的请求。在途虎养车这样的平台爬取数据时，请求头不仅需要包含基本的身份标识信息，还需要模拟真实用户的行为特征，以避免被识别为自动化程序而遭到拦截。一个典型的请求头会包含User-Agent来伪装成普通浏览器，携带Authorization和Cookie来维持登录状态，设置Content-Type来声明数据格式，还可能包含一些平台特定的验证字段如blackbox或TongDun-TokenId等反爬机制相关的信息。这些头部信息共同构成了一个完整的请求身份，缺少任何一个关键字段都可能导致请求失败。</p>
+<h3 id="heading-12">车辆管理功能</h3>
+<h4 id="heading-13">获取当前车辆列表</h4>
+<pre><code class="language-python">def get_car_list() -&gt; List[Dict]:
+    &quot;&quot;&quot;获取当前账户下的车辆列表&quot;&quot;&quot;
+    url = &quot;https://cl-gateway.tuhu.cn/cl-user-info-site/myCar/getCarListByUserId&quot;
+    payload = {&quot;userId&quot;: USER_ID}
+    
+    response = requests.post(url, headers=headers, json=payload)
+    if response.json().get(&quot;code&quot;) == 10000:
+        return response.json().get(&quot;data&quot;, [])
+    return []
+</code></pre>
+<ul>
+<li>这里的url也需要通过上面的<code>F12</code>开发者模式的网络请求中获取，即调用哪个api才能获取汽车列表。我们在汽车列表页面对网络请求进行抓取就会获得以上的api,通过发送我们的<code>userID</code>即可获得到所有的汽车品牌。<br />
+<img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/raw/main/Picture/20250809142341233.png" alt="image.png" /></li>
+</ul>
+<h4 id="heading-14">删除指定车辆</h4>
+<p>因为途虎只允许未认证的情况下添加5辆汽车，限制了我们爬取全部汽车的信息，这个时候我们就需要在获得一辆汽车的信息后删除这辆车，反复执行添加删除车辆，直到获得所有车的信息。</p>
+<p>::: tip 提示<br />
+这里的url是途虎的车辆删除端口，通过<code>F12</code>抓取，发送<code>carID</code>和<code>userID</code>就可以删除你的汽车。<br />
+:::</p>
+<pre><code class="language-python">def delete_car(car_id: str) -&gt; bool:
+    &quot;&quot;&quot;删除指定车辆&quot;&quot;&quot;
+    url = &quot;https://cl-gateway.tuhu.cn/cl-user-info-site/myCar/removeCar&quot;
+    payload = {&quot;carId&quot;: car_id, &quot;userId&quot;: USER_ID}
+    
+    response = requests.post(url, headers=headers, json=payload)
+    return response.json().get(&quot;code&quot;) == 10000
+</code></pre>
+<h4 id="heading-15">添加新车</h4>
+<p>通过添加新车，我们可以获得汽车的<code>carId</code>，我们需要给url发送<code>payload</code>中的信息就可以获取：</p>
+<pre><code class="language-python">def add_vehicle(model_code: str, year: int, tid: int) -&gt; Optional[str]:
+    &quot;&quot;&quot;添加新车并返回carId&quot;&quot;&quot;
+    url = &quot;https://cl-gateway.tuhu.cn/cl-user-info-site/myCar/addCar&quot;
+    payload = {
+        &quot;modelCode&quot;: model_code,
+        &quot;productionYear&quot;: year,
+        &quot;tid&quot;: tid,
+        &quot;source&quot;: &quot;tuhu_wap&quot;
+    }
+    
+    response = requests.post(url, headers=headers, json=payload)
+    if response.json().get(&quot;code&quot;) == 10000:
+        return response.json().get(&quot;data&quot;, {}).get(&quot;carId&quot;)
+    return None
+</code></pre>
+<h2 id="heading-16">数据爬取功能</h2>
+<h3 id="heading-17">构建养护查询链接</h3>
+<pre><code class="language-python">def build_maintenance_link(vehicle_json: str) -&gt; str:
+    &quot;&quot;&quot;构建养护查询完整链接&quot;&quot;&quot;
+    base_url = &quot;https://maint-api.tuhu.cn/apinew/GetAppFirstPageExternalData&quot;
+    params = {
+        &quot;channel&quot;: &quot;kH5&quot;,
+        &quot;city&quot;: CITY,
+        &quot;province&quot;: PROVINCE,
+        &quot;vehicle&quot;: requests.utils.quote(vehicle_json)
+    }
+    return f&quot;{base_url}?{urllib.parse.urlencode(params)}&quot;
+</code></pre>
+<h3 id="heading-18">执行数据爬取</h3>
+<pre><code class="language-python">def crawl_maintenance(link: str) -&gt; Optional[Dict]:
+    &quot;&quot;&quot;爬取养护数据&quot;&quot;&quot;
+    try:
+        response = requests.get(link, headers=headers, timeout=15)
+        return response.json().get(&quot;Categories&quot;, [])
+    except Exception as e:
+        print(f&quot;爬取失败: {str(e)}&quot;)
+        return None
+</code></pre>
+<h3 id="5">5辆车限制解决方案</h3>
+<h4 id="heading-19">解决方案设计</h4>
+<pre><code class="language-mermaid">graph TD
+    A[开始] --&gt; B[获取当前车辆列表]
+    B --&gt; C{车辆数≥5?}
+    C --&gt;|是| D[删除最早添加的车辆]
+    C --&gt;|否| E[添加新车]
+    D --&gt; E
+    E --&gt; F[爬取数据]
+    F --&gt; G[保存结果]
+    G --&gt; H[删除刚添加的车辆]
+    H --&gt; I{所有车型完成?}
+    I --&gt;|否| B
+    I --&gt;|是| J[结束]
+</code></pre>
+<h4 id="heading-20">核心实现代码</h4>
+<pre><code class="language-python">def process_vehicle(model_info: Dict) -&gt; Optional[Dict]:
+    &quot;&quot;&quot;处理单个车型的爬取流程&quot;&quot;&quot;
+    # 检查并管理车辆
+    while True:
+        current_vehicles = get_car_list()
+        if len(current_vehicles) &lt; 5:
+            break
+        # 删除最早添加的车辆
+        oldest = sorted(current_vehicles, key=lambda x: x[&quot;addTime&quot;])[0]
+        if not delete_car(oldest[&quot;carId&quot;]):
+            return None
+        time.sleep(2)
+    
+    # 添加新车
+    car_id = add_vehicle(
+        model_info[&quot;model_code&quot;],
+        model_info[&quot;year&quot;],
+        model_info[&quot;tid&quot;]
+    )
+    if not car_id:
+        return None
+    
+    # 构建并爬取链接
+    vehicle_json = build_vehicle_json(car_id, model_info)
+    link = build_maintenance_link(vehicle_json)
+    data = crawl_maintenance(link)
+    
+    # 立即删除车辆
+    delete_car(car_id)
+    
+    return {
+        &quot;model_info&quot;: model_info,
+        &quot;data&quot;: data,
+        &quot;timestamp&quot;: datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)
+    }
+</code></pre>
+<h3 id="heading-21">完整工作流程</h3>
+<h4 id="heading-22">主函数实现</h4>
+<pre><code class="language-python">def main():
+    # 1. 获取所有品牌
+    brands = get_brands()
+    
+    # 2. 遍历品牌获取车型
+    for brand in brands[:2]:  # 测试时限制品牌数量
+        models = get_models(brand[&quot;name&quot;])
+        
+        # 3. 处理每个车型
+        for model in models[:3]:  # 测试时限制车型数量
+            displacements = get_displacements(model[&quot;code&quot;])
+            
+            for disp in displacements[:2]:  # 测试时限制排量数量
+                years = get_product_years(model[&quot;code&quot;], disp)
+                
+                for year in years[:1]:  # 测试时限制年份数量
+                    # 4. 获取tid并处理车辆
+                    vehicle_info = get_vehicle_tid(model[&quot;code&quot;], disp, year)
+                    if vehicle_info:
+                        result = process_vehicle({
+                            &quot;brand&quot;: brand[&quot;name&quot;],
+                            &quot;model_name&quot;: model[&quot;displayName&quot;],
+                            &quot;model_code&quot;: model[&quot;code&quot;],
+                            &quot;displacement&quot;: disp,
+                            &quot;year&quot;: year,
+                            &quot;tid&quot;: vehicle_info[&quot;tid&quot;]
+                        })
+                        
+                        # 5. 保存结果
+                        if result:
+                            save_result(result)
+                            time.sleep(DELAY_BETWEEN_REQUESTS)
+</code></pre>
+<h4 id="heading-23">运行示例</h4>
+<pre><code class="language-bash">python main.py
+</code></pre>
+<p>输出示例：</p>
+<pre><code>开始处理品牌: 大众
+获取到车型: 高尔夫 (code: VW-GOLF)
+处理排量: 1.4T
+处理年份: 2022
+成功添加车辆: VW123
+爬取数据完成
+删除车辆: VW123
+保存结果成功
+...
+</code></pre>
+<h2 id="heading-24">最终信息爬取</h2>
+<p>在数据功能爬取阶段，我们成功爬取了想要的参数，参数结果示例如下所示：</p>
+<pre><code class="language-json">&quot;奥迪&quot;: [  
+  {  
+    &quot;model_name&quot;: &quot;奥迪 A3&quot;,  
+    &quot;model_code&quot;: &quot;VE-AADA3AD&quot;,  
+    &quot;factory&quot;: &quot;一汽大众奥迪&quot;,  
+    &quot;displacement&quot;: &quot;1.4T(35TFSI)&quot;,  
+    &quot;production_year&quot;: 2025,  
+    &quot;tid&quot;: &quot;157761&quot;,  
+    &quot;car_id&quot;: &quot;3B1BD673-BEE9-45CC-8B57-036275D53EFA&quot;,  
+    &quot;vehicle_json&quot;: &quot;{\&quot;CarId\&quot;: \&quot;3B1BD673-BEE9-45CC-8B57-036275D53EFA\&quot;, \&quot;PaiLiang\&quot;: \&quot;1.4T(35TFSI)\&quot;, \&quot;OnRoadTime\&quot;: \&quot;\&quot;, \&quot;VehicleId\&quot;: \&quot;VE-AADA3AD\&quot;, \&quot;tireSize\&quot;: \&quot;\&quot;, \&quot;Properties\&quot;: [], \&quot;Nian\&quot;: \&quot;2025\&quot;, \&quot;Distance\&quot;: 0, \&quot;Tid\&quot;: \&quot;157761\&quot;}&quot;,   
+    &quot;crawl_time&quot;: &quot;2025-08-05 22:41:51&quot;,  
+    &quot;status&quot;: &quot;完整&quot;,  
+    &quot;car_details&quot;: null  
+  }
+  ]
+</code></pre>
+<p>其实已经结束了，我们只需要把<code>CarId</code>,<code>model_code</code>,<code>PaiLiang</code>必须信息填入之前的链接就可以获得套餐了，读取json文件填入就像，批量获取链接里面的内容，这里不多赘述，但是要控制爬的时间，一般随机1-3秒即可，实践证明太快会导致途虎封ip。<br />
+<img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/raw/main/Picture/20250809150005647.png" alt="image.png" /></p>
+]]></description>
+      <category>研究</category>
+      <enclosure url="https://raw.gitcode.com/Sunhaha520/BlogPicture/raw/main/Picture/tuhu.webp" length="0" type="image/webp"></enclosure>
+    </item>
+    <item>
+      <title>基于摄影测量的跨房间点云配准与重建精度研究</title>
+      <link>https://sunhaha520.github.io/post/mAayTs/</link>
+      <guid isPermaLink="true">https://sunhaha520.github.io/post/mAayTs/</guid>
+      <pubDate>Sat, 26 Jul 2025 00:07:40 +0800</pubDate>
+      <description><![CDATA[<p>摄影测量技术在单体房间三维重建中表现良好，然而实际建筑环境多为多房间连通结构。本文旨在探究摄影测量方法在跨房间三维重建中的性能表现，重点分析其重建房间连接处的效果。</p>
+<!-- more -->
+<h2 id="heading">基于固定照片</h2>
+<h3 id="heading-1">设备及工具</h3>
+<ul>
+<li>设备：魅族21NOTE(谷歌相机)</li>
+<li>软件：MetaShape</li>
+</ul>
+<p>实验数据采集包含厨房和客厅两个连通空间，共获取284张多视角高清图像。通过摄影测量算法处理，成功重建了场景的三维点云模型，以下是采集数据的部分截图。<br />
+<img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/raw/main/Picture/20250801173557041.png" alt="image.png" /></p>
+<h3 id="heading-2">重建效果</h3>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/raw/main/Picture/20250801175046453.png" alt="image.png" /><br />
+实验结果表明，当前摄影测量方法在厨房与客厅的空间衔接上存在明显不足。从结果可以看出，由于特<br />
+征点匹配失败，两个功能空间未能正确重建其连接关系。根据建筑平面图比对，厨房入口（对应客厅&rsquo;蜡笔小新&rsquo;门帘位置）未能实现准确重建，这表明该方法在跨空间三维重建方面仍需改进。</p>
+<h2 id="heading-3">定位辅助</h2>
+<p>在尝试通过为每组拍摄照片标注位置信息来实现跨房间三维重建的粗配准时，我们发现基于GPS的定位方案存在显著局限性。理论上，利用相同定位标签的空间对应关系可以为点云重建提供初始对齐依据，且普通GPS在开放空间的定位精度（约2-3米误差）对于房间级重建尚可接受。然而实际测试表明，室内环境的GPS信号质量存在严重衰减问题：在有窗房间中，距离窗口仅2米处的信号强度已出现明显下降；而在无窗的低楼层室内环境，GPS信号接收成功率不足10%，基本无法实现有效定位。如图所示，封闭空间与开放区域的信号强度对比差异显著，这直接影响了基于位置标签的配准方案在室内重建中的实际应用价值。该现象提示我们，在室内三维重建任务中需要探索不依赖GPS信号的替代方案，如视觉标记辅助或惯性导航融合等方法。<br />
+<img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/aea6e1f8660bafebdb85376a9c2f16c35d70bbf6/20250801181509658.png" alt="image.png" /><br />
+在缺乏室内蓝牙/WiFi定位系统支持的情况下，本研究暂时无法深入探索基于无线信号的室内定位方案。然而，在GPS信号良好的半开放环境中（如临近窗户区域或低层建筑阳台），通过为采集图像添加位置标签来实现粗配准的思路具有理论可行性。</p>
+<h2 id="heading-4">基于视频截取</h2>
+<p>针对当前基于照片的三维重建方法中存在的图像数量不足及连续性较差等问题，现在提出了一种基于视<br />
+频关键帧提取的改进方案。通过理论分析和实验验证，我们发现传统静态图像采集方式主要存在以下两<br />
+个技术瓶颈：</p>
+<ol>
+<li>样本数量限制：静态照片采集效率低下，难以获取足够数量的高质量样本；</li>
+<li>时序连续性缺失：离散拍摄导致帧间关联信息丢失，影响重建精度。</li>
+</ol>
+<p>为解决上述问题，本研究创新性地采用视频录制结合关键帧提取的技术路线。相较于静态拍摄，视频采<br />
+集具有以下优势：</p>
+<ul>
+<li>可实现每秒30帧以上的连续图像捕获</li>
+<li>保证帧间运动参数的连续性</li>
+<li>显著提升数据采集效率<br />
+在硬件选择方面，经过多维度评估（包括分辨率、动态范围、色彩还原度等指标），最终选用Pocket3作为视频采集设备。该设备具备4K/60fps的视频录制能力，其1英寸大底CMOS传感器可提供优异的低光照性能，这些特性为后续三维重建提供了高质量的原始数据基础。</li>
+</ul>
+<h3 id="heading-5">使用工具</h3>
+<ul>
+<li>设备：DJI Pocket3</li>
+<li>软件：自己写的帧截取工具，MetaShape。</li>
+</ul>
+<h3 id="heading-6">实验流程</h3>
+<h4 id="heading-7">视频拍摄</h4>
+<p>本研究采用手持Pocket3设备进行室内场景视频采集，按照以下路径实现场景全覆盖。采集过程中保持设备高度1.7米（模拟人眼视角，部分死角采用上下扫描），以0.5m/s的匀速沿顺时针方向移动，确保每个墙面获得至少3秒的连续拍摄。设备参数设置为4K UHD分辨率（3840×2160）和60fps帧率，配合全向防抖功能保证画面稳定性，同时采用自动白平衡和曝光模式以适应室内光照变化。<br />
+<img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/387028c62d84ab013d5b9c12ff22af450b9a3094/20250801183530916.png" alt="image.png" /></p>
+<h4 id="heading-8">图片截取</h4>
+<p>本文设计并实现了一个基于Python的视频帧提取工具，其核心功能模块采用OpenCV计算机视觉库进行视频解码与图像处理。该工具的主要算法流程如下：</p>
+<ol>
+<li>视频文件解析：通过OpenCV的VideoCapture接口读取视频文件，获取视频总帧数、分辨率等元数据信息：</li>
+</ol>
+<pre><code class="language-python">cap = cv2.VideoCapture(video_path)
+total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+</code></pre>
+<ol start="2">
+<li>帧采样算法：采用等间隔采样策略提取关键帧，支持用户自定义采样间隔（1-100帧可调）：</li>
+</ol>
+<pre><code class="language-python">if frame_count % frame_interval == 0:
+output_path = os.path.join(output_folder, f&quot;{saved_count + 1:04d}.png&quot;)
+cv2.imwrite(output_path, frame)
+</code></pre>
+<ol start="3">
+<li>多线程处理架构：为避免界面卡顿，采用生产者-消费者模型，将耗时的帧提取任务放在后台线程执行：</li>
+</ol>
+<pre><code class="language-python">Thread(target=self.extract_frames,
+	args=(video_path, output_path, frame_interval),
+	daemon=True).start()
+</code></pre>
+<ol start="4">
+<li>输出文件管理：自动创建目标目录，并按0001.png、0002.png等四位编号格式保存提取的帧图<br />
+像，确保文件序列的规范性和可追溯性。<br />
+当然，为了方便操作，最后为他做了一个简单的图形界面，如下图：<br />
+<img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/7aa1345196d27fde1a2cbd60556f6bd5d31695fc/20250801184632809.png" alt="image.png" /><br />
+针对原始视频数据（总帧数13,046帧，时长544秒@60fps），基于帧间连续性分析采用每20帧提取1帧<br />
+的采样方案，最终获得653张关键帧图像，采样率为1.5%，相邻采样帧时间间隔约0.67秒。采样后的图<br />
+像数据集具有3840×2160的高分辨率。</li>
+</ol>
+<h4 id="heading-9">重建结果</h4>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/bd6ed2047306cacb2892c2ebe905e0baee932a22/20250801210011715.png" alt="image.png" /><br />
+实验结果表明，基于视频帧提取的三维重建方法在空间位置还原方面表现良好。充分验证了视频帧采样<br />
+策略的有效性。</p>
+<h2 id="heading-10">进阶探索</h2>
+<p>COLMAP（Computational Lightmapping）是一款开源的运动恢复结构（Structure-from-Motion,<br />
+SfM）和多视图立体（Multi-View Stereo, MVS） 三维重建工具包，由瑞士苏黎世联邦理工学院（ETH Zurich）开发。它能够从一组无序的二维照片中自动重建出场景的三维几何结构和相机位姿，广泛应用于摄影测量、计算机视觉、虚拟现实、文化遗产数字化等领域。下面我将使用COLMP进行重建。</p>
+<h3 id="colmap">COLMAP重建</h3>
+<h4 id="heading-11">前期准备</h4>
+<p>首先使用上面的帧截取工具对视频每一帧进行截取，得到全视频的数据集。</p>
+<h4 id="heading-12">筛选最优帧（关键帧选择）</h4>
+<p>直接使用所有帧会导致 <strong>数据冗余</strong> 和 <strong>计算量过大</strong>，COLMAP 提供了 关键帧选择 方法：</p>
+<pre><code class="language-bash">colmap feature_extractor --database_path database.db --image_path frames/
+colmap exhaustive_matcher --database_path database.db
+colmap mapper --database_path database.db --image_path frames/ --output_path
+sparse/
+</code></pre>
+<ul>
+<li>feature_extractor ：提取图像特征（SIFT/SURF）</li>
+<li>exhaustive_matcher ：匹配特征点</li>
+<li>mapper ：自动选择 匹配度高的关键帧，丢弃模糊/低质量帧</li>
+</ul>
+<h4 id="-colmap-">运行 COLMAP 三维重建</h4>
+<h5 id="sfm">稀疏重建（SfM）</h5>
+<pre><code class="language-bash">colmap feature_extractor --database_path database.db --image_path
+selected_frames/
+colmap exhaustive_matcher --database_path database.db
+colmap mapper --database_path database.db --image_path selected_frames/ --
+output_path sparse/
+</code></pre>
+<ul>
+<li>selected_frames/ ：存放筛选后的关键帧</li>
+<li>sparse/ ：输出稀疏点云（ .bin 或 .txt 格式）</li>
+</ul>
+<h5 id="mvs">稠密重建（MVS）</h5>
+<pre><code class="language-bash">colmap image_undistorter --image_path selected_frames/ --input_path sparse/0 --
+output_path dense/
+colmap patch_match_stereo --workspace_path dense/
+colmap stereo_fusion --workspace_path dense/ --output_path dense/fused.ply
+</code></pre>
+<ul>
+<li>patch_match_stereo ：生成深度图（需GPU加速）</li>
+<li>stereo_fusion ：融合深度图，输出 稠密点云（.ply）</li>
+</ul>
+<h4 id="heading-13">重建结果</h4>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/9e4fa3b9bef58e552c3da40327cf79b899abea02/20250801211429094.png" alt="image.png" /><br />
+实验结果表明，基于视频帧提取的三维重建取得了显著成效。从重建结果来看，生成的点云模型不仅空<br />
+间位置准确，几何结构完整，在细节表现方面也展现出明显优势。通过优化帧选择策略，我们获得了比<br />
+原始视频采样更多的高质量图像（1500张）</p>
+<h2 id="3dgs3d-gaussian-splatting">3DGS（3D Gaussian Splatting)</h2>
+<p>为了更清晰还原细节，实验尝试了3DGS重建。</p>
+<h3 id="heading-14">数据准备</h3>
+<p>在上面COLMAP过程中，可以输出以下关键文件：</p>
+<ul>
+<li>sparse/0/cameras.bin - 相机参数</li>
+<li>sparse/0/images.bin - 相机位姿</li>
+<li>sparse/0/points3D.bin - 稀疏点云</li>
+<li>dense/fused.ply - （可选）稠密点云<br />
+我们需要对格式进行转换，转化的命令如下：</li>
+</ul>
+<pre><code class="language-bash">python convert.py \
+--colmap_path ./sparse/0 \
+--images_path ./images \
+--output_path ./gs_data
+</code></pre>
+<p>生成结构：</p>
+<pre><code class="language-bash">gs_data/
+├── cameras.json
+ # 相机参数
+├── points3D.ply
+ # 初始高斯中心
+└── images/
+ #
+ undistorted images
+</code></pre>
+<h3 id="3dgs">3DGS训练阶段</h3>
+<h4 id="heading-15">环境配置</h4>
+<pre><code class="language-bash">conda create -n gs python=3.10
+conda activate gs
+pip install torch torchvision torchaudio --index-url
+https://download.pytorch.org/whl/cu118
+git clone https://github.com/graphdeco-inria/gaussian-splatting --recursive
+cd gaussian-splatting
+pip install -r requirements.txt
+</code></pre>
+<h4 id="heading-16">启动训练</h4>
+<pre><code class="language-bash">python train.py \
+-s ./gs_data \ # 输入数据路径
+-m ./output \ # 模型输出路径
+--iterations 30000 \ # 推荐迭代次数
+--densification_interval 100 \ # 高斯密度控制
+--opacity_threshold 0.005
+</code></pre>
+<p>关键参数：</p>
+<ul>
+<li>&ndash;densification_interval ：控制高斯数量增长频率</li>
+<li>&ndash;position_lr_init 0.00016 ：位置学习率</li>
+<li>&ndash;lambda_dssim 0.2 ：结构相似性权重</li>
+</ul>
+<h4 id="heading-17">实时可视化</h4>
+<pre><code class="language-bash">python viewer.py -m ./output
+</code></pre>
+<h3 id="heading-18">重建结果</h3>
+<p><img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/fcb7885a6a62f4823f86669dd8dcd1254459a346/20250801212356036.png" alt="image.png" /></p>
+<p>通过3D Gaussian Splatting（3DGS）技术，我们实现了显著优于传统方法的细节重建效果。</p>
+<h4 id="heading-19">局限性</h4>
+<p>3D Gaussian Splatting (3DGS) 在室内重建中虽然表现出色，但是会生成大量冗余高斯椭球，难以完全清除由此产生的椭圆状高斯分布杂质。但是在室外建筑中却表现良好。下面是使用无人机绕飞一圈重建的苏州虎丘塔。<br />
+<img src="https://raw.gitcode.com/Sunhaha520/BlogPicture/blobs/9010e83c5dc454eaa00da770a28b07c6a09fe2f1/20250801212831782.png" alt="image.png" /></p>
+<h2 id="heading-20">总结</h2>
+<p>实验结果表明，基于视频帧提取的三维重建方法能够准确还原室内空间结构，房间连接处的几何连续性<br />
+保持良好。相较于直接使用摄像头拍摄重建点云的方法，视频帧提取方案通过优化采样策略，在保证重<br />
+建精度的同时显著提升了处理效率。</p>
+]]></description>
+      <category>研究</category>
+      <enclosure url="https://raw.gitcode.com/Sunhaha520/BlogPicture/raw/main/Picture/Canvas-Ruom-1.webp" length="0" type="image/webp"></enclosure>
+    </item>
+    <item>
+      <title>Astra Pro深度相机折腾记</title>
+      <link>https://sunhaha520.github.io/post/mDI11L/</link>
+      <guid isPermaLink="true">https://sunhaha520.github.io/post/mDI11L/</guid>
+      <pubDate>Fri, 11 Jul 2025 00:40:02 +0800</pubDate>
+      <description><![CDATA[<p>最近在闲鱼花了45元淘了台深度相机，折腾出一套3D目标检测系统：用YOLOv8识别物体，结合深度信息生成3D边界框，Open3D可视化点云。踩了不少坑，在此记录一下。</p>
+<!-- more -->
+<h2 id="heading">缘起：一台从闲鱼来的相机</h2>
+<p>前段时间在闲鱼上刷到了一台 ASTRA Pro 深度相机，价格美丽，卖家说是公司项目结束后的闲置设备。想着最近在尝试点云重建的研究，于是果断入手了。收到货后发现品相不错，就开始了我的深度相机折腾之旅。<br />
+<img src="https://i0.hdslb.com/bfs/openplatform/135b3e922677e7b77ae9877a9ae255d521d9774a.png" alt="外观" /></p>
+<h2 id="heading-1">什么是深度相机？</h2>
+<p>简单来说，深度相机不仅能拍摄普通的彩色图像，还能获取场景中每个像素点的距离信息。这就像给普通相机加上了&quot;透视眼&quot;，能够感知到三维空间的深度信息。</p>
+<p>ASTRA Pro 是奥比中光（Orbbec）出品的一款深度相机，主要特点：</p>
+<ul>
+<li>支持 RGB 彩色图像和深度图像同时输出</li>
+<li>基于结构光技术，在室内环境下表现不错</li>
+<li>支持 OpenNI2 接口，开发起来相对友好</li>
+</ul>
+<h2 id="heading-2">搭建开发环境</h2>
+<p>首先需要安装一堆依赖库：</p>
+<pre><code class="language-bash"># 主要依赖
+pip install opencv-python
+pip install numpy
+pip install open3d
+pip install ultralytics
+pip install PyYAML
+</code></pre>
+<p>然后是 OpenNI2 的安装，这个稍微麻烦一些，需要根据系统版本下载对应的驱动。</p>
+<h3 id="1-">1. 驱动安装</h3>
+<ul>
+<li>下载地址：<a href="https://dl.orbbec3d.com/dist/drivers/win32/astra-win32-driver-4.3.0.20.zip">Orbbec Camera Driver for Windows</a></li>
+<li>官网入口：<a href="https://www.orbbec3d.com/index/download.html">www.orbbec3d.com</a>（需点击&quot;更多&quot;按钮）</li>
+<li>安装后<strong>必须重启电脑</strong></li>
+<li>验证：在设备管理器中查看 <code>Orbbec/ORBBEC Depth Sensor</code></li>
+</ul>
+<h3 id="2-openni-sdk">2. OpenNI SDK配置</h3>
+<ul>
+<li>下载SDK：<a href="https://dl.orbbec3d.com/dist/openni2/v2.3.0.85/Orbbec_OpenNI_v2.3.0.85_windows_release.zip">Orbbec OpenNI SDK</a></li>
+<li>安装步骤：
+<ol>
+<li>解压压缩包</li>
+<li>复制<code>Win64-Release</code>文件夹内容到 <code>C:\Program Files\Orbbec\OpenNI</code></li>
+</ol>
+</li>
+<li>测试工具：运行 <code>OpenNI\tools\NiViewer\NiViewer.exe</code></li>
+</ul>
+<h3 id="3-">3. 环境变量设置</h3>
+<h4 id="heading-3">临时设置（当前会话有效）</h4>
+<pre><code class="language-powershell">$Env:OPENNI2_REDIST64=&quot;C:/Program Files/Orbbec/OpenNI/sdk/libs&quot;
+</code></pre>
+<h4 id="heading-4">永久设置（需要重启终端）</h4>
+<pre><code class="language-powershell">[Environment]::SetEnvironmentVariable(&quot;OPENNI2_REDIST64&quot;, &quot;C:/Program Files/Orbbec/OpenNI/sdk/libs&quot;, &quot;Machine&quot;)
+</code></pre>
+<h2 id="heading-5">代码架构设计</h2>
+<p>整个程序的核心思路是：</p>
+<ol>
+<li>同时获取 RGB 图像和深度图像</li>
+<li>用 YOLOv8 检测 RGB 图像中的物体</li>
+<li>结合深度信息生成 3D 边界框</li>
+<li>用 Open3D 实现点云和 3D 边界框的可视化</li>
+</ol>
+<h3 id="heading-6">配置文件管理</h3>
+<p>为了方便调试，我把相机参数都写在了 YAML 配置文件里：</p>
+<pre><code class="language-yaml">Camera:
+  width: 640
+  height: 480
+  fps: 30
+  fx: 570.3
+  fy: 570.3
+  cx: 320.0
+  cy: 240.0
+  DepthMapFactor: 1000.0
+
+Viewer:
+  point_size: 4.0
+  background_color: [0, 0, 0]
+</code></pre>
+<p>这样调参数的时候就不用重新编译了，改完配置文件重启程序就行。</p>
+<h2 id="heading-7">核心功能实现</h2>
+<h3 id="1--1">1. 双摄像头同步</h3>
+<p>最开始遇到的问题是 RGB 摄像头和深度摄像头的同步问题。深度相机内置的 RGB 模块质量一般，所以我另外接了一个 USB 摄像头。</p>
+<pre><code class="language-python"># 初始化深度流
+depth_stream = dev.create_depth_stream()
+depth_stream.set_video_mode(...)
+depth_stream.start()
+
+# 初始化 RGB 摄像头
+cap = cv2.VideoCapture(1)  # 注意索引号
+</code></pre>
+<h3 id="2-yolo-">2. YOLO 目标检测</h3>
+<p>用的是 YOLOv8n 模型，轻量级，在我的笔记本上跑起来还算流畅：</p>
+<pre><code class="language-python">model = YOLO('yolov8n.pt')
+results = model(rgb_frame, conf=0.4, iou=0.7)
+</code></pre>
+<p><img src="https://i0.hdslb.com/bfs/openplatform/7b8b2c105395ceb61357b00b99a7705469540316.png" alt="" /></p>
+<h3 id="3-3d-">3. 3D 边界框生成</h3>
+<p>这部分是最有趣的，通过深度信息把 2D 检测框转换成 3D 边界框：</p>
+<pre><code class="language-python">def get_3d_bbox_from_2d(x1, y1, x2, y2, depth, fx, fy, cx, cy):
+    # 获取边界框区域的深度值
+    mask = depth[y1:y2, x1:x2]
+    valid_depths = mask[mask &gt; 0]
+    
+    # 计算深度范围
+    zmin, zmax = np.percentile(valid_depths, [10, 90])
+    
+    # 投影到3D空间
+    # ... 详细计算过程
+</code></pre>
+<h3 id="4-">4. 目标跟踪</h3>
+<p>为了让检测结果更稳定，加了个简单的基于 IoU 的目标跟踪：</p>
+<pre><code class="language-python">def track_boxes(prev_boxes, new_boxes, iou_threshold=0.5):
+    # 计算新旧边界框的重叠度
+    # 关联最匹配的边界框
+    # 对于消失的目标，逐渐降低置信度
+</code></pre>
+<p>这样就避免了检测框在连续帧间剧烈跳动的问题。</p>
+<h2 id="heading-8">实际效果</h2>
+<h3 id="3d">点云与3D边界框可视化</h3>
+<p>生成的点云效果还是很不错的，同时检测到的物体会用不同颜色的 3D 边界框标出来，并且显示距离信息：</p>
+<p><img src="https://i0.hdslb.com/bfs/openplatform/31e92bb4bbf86390aa778280071070d98b8f187e.png" alt="" /></p>
+<h3 id="heading-9">深度图可视化</h3>
+<p>深度图用热力图的形式展示，近的地方是红色，远的地方是浅黄色：<br />
+<img src="https://i0.hdslb.com/bfs/openplatform/89688b4c485165359bb13594984eaebcfe0908aa.png" alt="" /></p>
+<h2 id="heading-10">遇到的坑</h2>
+<h3 id="1--2">1. 相机内参标定</h3>
+<p>最开始直接用了网上找的参数，结果投影出来的 3D 点云完全变形了。后来老老实实用棋盘格标定了一遍，效果好了很多。</p>
+<h3 id="2-">2. 坐标系转换</h3>
+<p>OpenCV、Open3D 和深度相机的坐标系都不太一样，需要做坐标转换。我用了一个变换矩阵：</p>
+<pre><code class="language-python">COORD_TRANSFORM = np.array([
+    [1, 0, 0, 0],
+    [0, -1, 0, 0],
+    [0, 0, -1, 0],
+    [0, 0, 0, 1]
+])
+</code></pre>
+<h3 id="3--1">3. 性能优化</h3>
+<p>最开始程序跑起来很卡，后来发现是点云密度太高了。加了体素下采样后流畅了很多：</p>
+<pre><code class="language-python">pcl = pcl.voxel_down_sample(voxel_size=0.005)
+</code></pre>
+<h3 id="4--1">4. 内存管理</h3>
+<p>Open3D 的几何体对象需要手动管理，不然会内存泄漏。特别是在循环中创建 LineSet 的时候，需要复用对象而不是每次都创建新的。</p>
+<h2 id="heading-11">交互控制</h2>
+<p>加了一些简单的键盘控制：</p>
+<ul>
+<li><code>+</code> 和 <code>-</code> 键控制缩放</li>
+<li><code>q</code> 键退出程序</li>
+</ul>
+<pre><code class="language-python">key = cv2.waitKey(1)
+if key == ord('+'):
+    zoom_level = max(0.1, zoom_level * 0.8)
+    vis.get_view_control().set_zoom(zoom_level)
+elif key == ord('q'):
+    break
+</code></pre>
+<h2 id="heading-12">后续计划</h2>
+<p>这个小项目还有很多可以改进的地方：</p>
+<ol>
+<li><strong>SLAM 功能</strong>：加入视觉里程计，实现实时建图</li>
+<li><strong>手势识别</strong>：利用深度信息识别手势</li>
+<li><strong>物体抓取</strong>：结合机械臂做物体抓取</li>
+<li><strong>AR 应用</strong>：在现实场景中叠加虚拟物体</li>
+</ol>
+<p><img src="https://i0.hdslb.com/bfs/openplatform/c2be8d6a051d302f52b335c40851bd77fd972235.png" alt="" /></p>
+<hr />
+<p><em>P.S. 点云的世界远比我想象的要精彩，这只是个开始&hellip;</em> 🚀</p>
+]]></description>
+      <category>折腾</category>
+      <enclosure url="https://i0.hdslb.com/bfs/openplatform/448acfbfc0b1ecfd5bb9cf6c22e3fcbdf86f87c7.png" length="0" type="image/png"></enclosure>
+    </item>
+    <item>
+      <title>Gridea Pro上手指南 </title>
+      <link>https://sunhaha520.github.io/post/quick-start/</link>
+      <guid isPermaLink="true">https://sunhaha520.github.io/post/quick-start/</guid>
+      <pubDate>Mon, 09 Jun 2025 21:42:45 +0800</pubDate>
+      <description><![CDATA[<p>这篇指南会带你一步一步熟悉 Gridea Pro 的界面和操作，从写第一篇文章到把博客发布到互联网上。</p>
+<!-- more -->
+<h2 id="heading">认识界面</h2>
+<p>打开 Gridea Pro 后，你会看到左侧是导航栏，右侧是内容区域。</p>
+<p>左侧导航从上到下依次是：</p>
+<table>
+<thead>
+<tr>
+<th>导航</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>文 章</strong></td>
+<td>管理你的所有博客文章</td>
+</tr>
+<tr>
+<td><strong>闪 念</strong></td>
+<td>速记短想法、灵感碎片</td>
+</tr>
+<tr>
+<td><strong>评 论</strong></td>
+<td>查看和管理读者评论</td>
+</tr>
+<tr>
+<td><strong>菜 单</strong></td>
+<td>自定义博客的导航栏</td>
+</tr>
+<tr>
+<td><strong>分 类</strong></td>
+<td>管理文章分类</td>
+</tr>
+<tr>
+<td><strong>标 签</strong></td>
+<td>管理文章标签</td>
+</tr>
+<tr>
+<td><strong>友 链</strong></td>
+<td>管理友情链接</td>
+</tr>
+<tr>
+<td><strong>主 题</strong></td>
+<td>切换和配置博客主题</td>
+</tr>
+<tr>
+<td><strong>配 置</strong></td>
+<td>设置部署平台、SEO、CDN 等</td>
+</tr>
+</tbody>
+</table>
+<p>导航栏底部有两个重要按钮：<strong>「预 览」</strong> 和 <strong>「同 步」</strong>，后面会详细讲到。</p>
+<hr />
+<h2 id="heading-1">第一步：写一篇文章</h2>
+<ol>
+<li>点击左侧导航的 <strong>「文 章」</strong>，进入文章列表页</li>
+<li>点击右上角的 <strong>「 + 」</strong> 按钮，会打开文章编辑器</li>
+<li>最上方是<strong>标题输入框</strong>，下方是<strong>正文编辑区</strong>（支持 Markdown 语法）</li>
+<li>写完内容后，点击编辑器顶部工具栏的 <strong>「 纸飞机 」图标</strong>，会弹出右侧的<strong>文章设置面板</strong></li>
+</ol>
+<p>在文章设置面板中，你可以配置：</p>
+<ul>
+<li><strong>URL</strong> — 文章的访问路径（默认用文件名）</li>
+<li><strong>分 类</strong> — 选择一个分类，或留空</li>
+<li><strong>标 签</strong> — 点击已有标签添加，或输入新标签后按回车创建</li>
+<li><strong>创建时间</strong> — 默认是当前时间，可以手动修改</li>
+<li><strong>封面图</strong> — 粘贴在线图片链接，或点击上传区域从本地选择图片</li>
+<li><strong>列表中隐藏</strong> — 开启后，文章不会出现在博客的文章列表中（适合「关于」页面）</li>
+<li><strong>置顶文章</strong> — 开启后，文章会固定在博客文章列表最顶部</li>
+</ul>
+<p>设置完成后，点击面板底部的 <strong>「发布」</strong> 按钮保存文章。如果还没写完，可以点击编辑器顶部的 <strong>「存草稿」</strong> 先保存为草稿。</p>
+<blockquote>
+<p><strong>小技巧</strong>：在文章正文中插入 <code>&lt;!-- more --&gt;</code> 标记，标记之前的内容会作为文章摘要显示在博客文章列表中。你可以通过编辑器右侧的 <strong>「&hellip;」</strong> 按钮快速插入这个标记。</p>
+</blockquote>
+<hr />
+<h2 id="heading-2">第二步：选择主题</h2>
+<ol>
+<li>点击左侧导航的 <strong>「主 题」</strong></li>
+<li>默认进入 <strong>「选择主题」</strong> 标签页，上方展示当前使用的主题，下方展示其他可选主题</li>
+<li>找到你喜欢的主题，点击 <strong>「使用该主题」</strong> 按钮即可切换</li>
+<li>切换到 <strong>「基础配置」</strong> 标签页，填写你的博客名称、作者名、站点描述等信息</li>
+<li>切换到 <strong>「个性化」</strong> 标签页，可以调整配色风格</li>
+</ol>
+<p>每个主题还可能有自己的 <strong>「自定义配置」</strong>（第四个标签页），比如社交链接、布局选项等，按需设置即可。</p>
+<hr />
+<h2 id="heading-3">第三步：预览效果</h2>
+<p>点击左侧导航栏底部的 <strong>「预 览」</strong> 按钮。</p>
+<p>Gridea Pro 会自动渲染整个博客站点，然后在浏览器中打开预览。你可以看到文章、主题、导航菜单等所有内容的实际效果。</p>
+<p>每次修改文章或切换主题后，重新点击「预 览」即可看到最新效果。</p>
+<blockquote>
+<p>注意：博客不是实时渲染的，每次修改后都需要再次点击「预 览」才能看到最新效果。</p>
+</blockquote>
+<hr />
+<h2 id="heading-4">第四步：配置部署</h2>
+<p>现在你的博客在本地已经准备好了，接下来配置一个部署平台，把它发布到互联网上。</p>
+<ol>
+<li>点击左侧导航的 <strong>「配 置」</strong></li>
+<li>在 <strong>「平 台」</strong> 下拉框中选择你要使用的部署方式</li>
+</ol>
+<p>Gridea Pro 支持以下平台：</p>
+<h3 id="github-pages">GitHub Pages（推荐新手）</h3>
+<p>免费、全球可访问，配置步骤：</p>
+<ol>
+<li>在 GitHub 上创建一个新仓库（仓库名建议用 <code>你的用户名.github.io</code>）</li>
+<li>前往 GitHub → Settings → Developer settings → <a href="https://github.com/settings/tokens">Personal access tokens</a>，生成一个 Token（勾选 <code>repo</code> 权限）</li>
+<li>回到 Gridea Pro 的「配 置」页面，填写以下信息：
+<ul>
+<li><strong>域 名</strong>：<code>https://你的用户名.github.io</code></li>
+<li><strong>仓库名称</strong>：<code>你的用户名.github.io</code></li>
+<li><strong>分 支</strong>：<code>main</code></li>
+<li><strong>仓库用户名</strong>：你的 GitHub 用户名</li>
+<li><strong>邮 箱</strong>：你的 GitHub 注册邮箱</li>
+<li><strong>令 牌</strong>：刚才生成的 Token</li>
+<li><strong>CNAME</strong>：<code>你购买的个人域名，如：</code>are.ink`（可选，没有可不填）</li>
+</ul>
+</li>
+<li>点击 <strong>「检测远程连接」</strong> 验证配置是否正确</li>
+<li>点击 <strong>「保存」</strong></li>
+</ol>
+<h3 id="vercel">Vercel</h3>
+<p>支持自定义域名，智能增量部署。需要填写 Vercel 项目名称和 Access Token。</p>
+<h3 id="cname">自定义域名（CNAME）</h3>
+<p>如果你有自己的域名（比如 <code>blog.example.com</code>），可以在上面的配置中填写 <strong>CNAME</strong> 字段：</p>
+<ol>
+<li>在你的域名注册商的 DNS 管理后台，添加一条 CNAME 记录，将你的域名指向 <code>你的用户名.github.io</code>（GitHub）或对应的平台域名</li>
+<li>回到 Gridea Pro 的「配 置」页面，将 <strong>域 名</strong> 改为你的自定义域名（如 <code>https://blog.example.com</code>）</li>
+<li>在 <strong>CNAME</strong> 字段中填写你的自定义域名（如 <code>blog.example.com</code>）</li>
+<li>保存后重新同步，GitHub Pages 会自动识别并生效</li>
+</ol>
+<p>如果暂时没有自己的域名，跳过这步即可，后面随时可以配置。</p>
+<hr />
+<h2 id="heading-5">第五步：发布上线</h2>
+<p>一切配置就绪后，点击左侧导航栏底部的 <strong>「同 步」</strong> 按钮（火箭图标）。</p>
+<p>按钮会显示加载动画，等待片刻，看到「同步成功啦！」的提示，说明你的博客已经发布到互联网上了。</p>
+<p>打开浏览器，访问你在第四步填写的域名，就能看到你的博客了。</p>
+<p><strong>以后每次写完新文章或修改配置后，点一下「同 步」就会自动更新。</strong></p>
+<blockquote>
+<p><strong>提示</strong>：Gridea Pro 内置了完整的 Git 引擎，你的电脑上<strong>不需要安装 Git</strong>，填好配置信息后，点击 <strong>「同 步」</strong> 按钮就可以直接发布。</p>
+</blockquote>
+<hr />
+<h2 id="heading-6">更多功能</h2>
+<p>你已经完成了最核心的流程。以下是 Gridea Pro 的其他功能，可以慢慢探索：</p>
+<p><strong>闪 念</strong> — 点击左侧「闪 念」，在输入框中写下你的想法，点击「发布」。支持用 <code>#标签</code> 的方式给速记打标签。左侧有热力图展示你的记录频率。</p>
+<p><strong>菜 单</strong> — 点击左侧「菜 单」，可以自定义博客顶部的导航栏。比如添加「关于」「归档」「标签」等页面链接，也可以添加外部链接。</p>
+<p><strong>友 链</strong> — 点击左侧「友 链」，添加友情链接，和其他博主互相推荐。</p>
+<p><strong>评 论</strong> — 在「配 置」页面中可以设置评论系统（支持 Gitalk、Giscus、Waline、Twikoo 等 7 种方案），让读者可以在你的文章下方留言互动。</p>
+<p><strong>SEO</strong> — 在「配 置」→「SEO」标签页中，可以配置 Google Analytics、百度统计、JSON-LD 结构化数据等，帮助搜索引擎收录你的博客。Sitemap 和 RSS 订阅会自动生成，无需额外配置。</p>
+<p><strong>PWA</strong> — 在「配 置」→「PWA」标签页中，可以将你的博客配置为渐进式 Web 应用。开启后，读者可以把你的博客「添加到主屏幕」，获得接近原生 App 的浏览体验。可以自定义应用名称、主题色和图标。</p>
+<p><strong>CDN</strong> — 在「配 置」→「CDN」标签页中，可以开启图片和静态资源的 CDN 加速。配置好 CDN 仓库后，文章中插入的图片会自动上传到 CDN，加快博客的访问速度，尤其适合图片较多的博客。</p>
+<h2 id="heading-7">公式测试</h2>
+<p>测试 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=mc^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord mathnormal">m</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><br />
+测试 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><msqrt><mrow><mn>2</mn><mi>π</mi><msup><mi>σ</mi><mn>2</mn></msup></mrow></msqrt></mfrac><msup><mi>e</mi><mrow><mo>−</mo><mfrac><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mi>μ</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><mrow><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup></mrow></mfrac></mrow></msup></mrow><annotation encoding="application/x-tex">f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.8671em;vertical-align:-0.538em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.5154em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9638em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mtight" style="padding-left:0.833em;"><span class="mord mtight">2</span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463em;"><span style="top:-2.786em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.9238em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail mtight" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.0762em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.538em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.3291em;"><span style="top:-3.4534em;margin-right:0.05em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight"><span class="mopen nulldelimiter sizing reset-size3 size6"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.251em;"><span style="top:-2.5062em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9384em;"><span style="top:-2.9384em;margin-right:0.1em;"><span class="pstrut" style="height:2.6444em;"></span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.2255em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line mtight" style="border-bottom-width:0.049em;"></span></span><span style="top:-3.5021em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">x</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight">μ</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.0484em;"><span style="top:-3.0484em;margin-right:0.1em;"><span class="pstrut" style="height:2.6444em;"></span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4938em;"><span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+<h2 id="mcp---ai-">彩蛋：MCP — 用 AI 管理你的博客</h2>
+<p>这是 Gridea Pro 最独特的能力之一。</p>
+<p>Gridea Pro 内置了完整的 <a href="https://modelcontextprotocol.io/">MCP（Model Context Protocol）</a> 服务，这意味着你可以通过 AI 助手（如 Claude Desktop、Cursor、Claude Code 等任何支持 MCP 协议的客户端）直接与你的博客对话。</p>
+<p>你可以用自然语言让 AI 帮你：</p>
+<ul>
+<li><strong>写文章</strong> — 「帮我写一篇关于 Vue 3 组合式 API 的入门教程，标签设为 Vue 和前端」</li>
+<li><strong>管理内容</strong> — 「把所有标签为&quot;草稿&quot;的文章列出来」「删除上个月的测试文章」</li>
+<li><strong>记录闪念</strong> — 「记一条速记：今天学会了 Go 的 channel 用法」</li>
+<li><strong>配置站点</strong> — 「把博客名称改为&quot;我的技术笔记&quot;」「切换到 flavor-theme 主题」</li>
+<li><strong>发布部署</strong> — 「渲染站点并部署到 GitHub Pages」</li>
+</ul>
+<p>总共提供了 30+ 个 AI 可调用的工具，覆盖文章、标签、分类、菜单、友链、闪念、主题、设置、渲染和部署的完整管理。你不需要打开 Gridea Pro 的界面，在 AI 对话框里就能完成几乎所有操作。</p>
+<p>配置方式很简单。以 Claude Desktop 为例，打开 Settings → Developer → Edit Config，在 <code>mcpServers</code> 中添加：</p>
+<p><strong>macOS：</strong></p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;gridea-pro&quot;: {
+      &quot;command&quot;: &quot;/Applications/Gridea Pro.app/Contents/MacOS/gridea-pro-mcp&quot;,
+      &quot;env&quot;: {
+        &quot;SOURCE_DIR&quot;: &quot;/Users/你的用户名/Documents/Gridea Pro&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>Windows：</strong></p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;gridea-pro&quot;: {
+      &quot;command&quot;: &quot;C:\\Program Files\\Gridea Pro\\gridea-pro-mcp.exe&quot;,
+      &quot;env&quot;: {
+        &quot;SOURCE_DIR&quot;: &quot;C:\\Users\\你的用户名\\Documents\\Gridea Pro&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<ul>
+<li><strong>command</strong> — <code>gridea-pro-mcp</code> 二进制文件的路径</li>
+<li><strong>SOURCE_DIR</strong> — 你的博客数据目录路径</li>
+<li><strong>DEPLOY_ENABLED</strong> — 是否允许 AI 执行发布/同步操作（可选，默认关闭）</li>
+</ul>
+<p>默认情况下，AI 只能帮你写文章、管理内容，<strong>不能</strong>直接发布到线上。如果你信任 AI 并希望它能帮你一键发布，在 <code>env</code> 中加上 <code>&quot;DEPLOY_ENABLED&quot;: &quot;true&quot;</code> 即可开启。建议熟悉流程后再开启。</p>
+<p>保存后重启 Claude Desktop，就可以在对话中直接管理你的博客了。它通过本地管道通信，不需要网络、不需要端口、不需要认证，数据始终在你的电脑上。</p>
+<hr />
+<p>看到这里，相信你对 Gridea Pro 的使用已经有了全面的了解。</p>
+<p>这篇指南可以随时删除。祝你博客之旅愉快！</p>
+]]></description>
+      <category>Gridea Pro</category>
+      <category>入门</category>
+    </item>
+    <item>
+      <title>Intelligent Construction Site Safety Report Generator</title>
+      <link>https://sunhaha520.github.io/post/1vZUXz/</link>
+      <guid isPermaLink="true">https://sunhaha520.github.io/post/1vZUXz/</guid>
+      <pubDate>Thu, 14 Nov 2024 05:19:50 +0800</pubDate>
+      <description><![CDATA[<p>Intelligent construction site safety report generator using YOLO and GPT-4 for automated image analysis and report generation.</p>
+<!-- more -->
+<p>In the modern construction industry, safety is always the top priority. To enhance the efficiency and accuracy of construction site safety management, we have developed an intelligent construction site safety report generator. This tool combines computer vision and artificial intelligence technologies to automatically analyze construction site images, generate detailed safety reports, and provide improvement suggestions. This article will detail the development process, features, and usage of this tool.</p>
+<p>You can see the effect in the following video：</p>
+<p>@<a href="https://www.bilibili.com/video/BV1vDugzhEu6">bilibili</a></p>
+<p>You can view the generated security report at the following link：<br />
+<a href="https://lab.kelejun.cn/doc/baogao.pdf">Report</a></p>
+<h2 id="project-background">Project Background</h2>
+<p>Construction site safety management involves a large amount of image data, and traditional analysis methods are time-consuming and prone to errors. To address this issue, we decided to develop an automated tool that can quickly and accurately analyze construction site images and generate detailed safety reports. The core technologies of this tool include the YOLO (You Only Look Once) object detection model and OpenAI&rsquo;s GPT-4 model.</p>
+<h2 id="technical-architecture">Technical Architecture</h2>
+<ol>
+<li>
+<p><strong>YOLO Object Detection Model</strong>: We use the YOLO model to identify and classify various objects in construction site images, such as excavators, safety helmets, gloves, etc. The YOLO model is efficient and accurate, capable of processing large amounts of image data in real-time.</p>
+</li>
+<li>
+<p><strong>OpenAI GPT-4 Model</strong>: When generating safety reports, we use OpenAI&rsquo;s GPT-4 model to summarize analysis results and provide improvement suggestions. The GPT-4 model can understand natural language and generate high-quality text content.</p>
+</li>
+<li>
+<p><strong>Tkinter Graphical User Interface</strong>: To facilitate user operation, we developed a graphical user interface (GUI) using the Tkinter library. Users can select image folders, set output paths, and start the processing process through this interface.</p>
+</li>
+</ol>
+<h2 id="features">Features</h2>
+<ol>
+<li>
+<p><strong>Automatic Image Processing</strong>: Users only need to select the image folder, and the tool will automatically process all images, identify objects, and generate reports.</p>
+</li>
+<li>
+<p><strong>Detailed Report Generation</strong>: The tool generates detailed reports, including analysis results for each image, object classification statistics, and overall safety assessments.</p>
+</li>
+<li>
+<p><strong>AI Summary and Suggestions</strong>: Using the GPT-4 model to generate summaries and improvement suggestions, helping users better understand analysis results and take corresponding measures.</p>
+</li>
+<li>
+<p><strong>Time Recording</strong>: During the processing, the tool records the time of each operation, making it convenient for users to understand the processing progress.</p>
+</li>
+<li>
+<p><strong>Clear Function</strong>: Users can clear the AI report generation box at any time to restart the analysis.</p>
+</li>
+</ol>
+<h2 id="usage">Usage</h2>
+<ol>
+<li>
+<p><strong>Select Image Folder</strong>: Click the &ldquo;Browse&rdquo; button to select the folder containing construction site images.</p>
+</li>
+<li>
+<p><strong>Set Output Paths</strong>: Select the save paths for the identified images and the Markdown file.</p>
+</li>
+<li>
+<p><strong>Start Processing</strong>: Click the &ldquo;Start Processing&rdquo; button, and the tool will automatically process the images and generate reports.</p>
+</li>
+<li>
+<p><strong>View Reports</strong>: After processing, users can view detailed analysis results and improvement suggestions in the AI report generation box.</p>
+</li>
+<li>
+<p><strong>Clear Reports</strong>: If you need to restart the analysis, you can click the &ldquo;Clear&rdquo; button to clear the AI report generation box.</p>
+</li>
+</ol>
+<h2 id="project-summary">Project Summary</h2>
+<p>This intelligent construction site safety report generator not only improves the efficiency of construction site safety management but also significantly reduces the error rate of manual analysis. By combining advanced computer vision and artificial intelligence technologies, we have successfully developed a practical and efficient tool that provides strong support for safety management in the construction industry. In the future, we will continue to optimize and expand the functionality of this tool to meet the needs of more users.</p>
+<h2 id="future-prospects">Future Prospects</h2>
+<ol>
+<li>
+<p><strong>Multilingual Support</strong>: Add support for multiple languages to make the tool accessible to global users.</p>
+</li>
+<li>
+<p><strong>Real-Time Monitoring</strong>: Develop real-time monitoring functionality that can analyze images on-site and provide instant feedback.</p>
+</li>
+<li>
+<p><strong>Data Visualization</strong>: Enhance data visualization features to allow users to understand analysis results more intuitively.</p>
+</li>
+</ol>
+<p>Through continuous technological innovation and functional expansion, we believe that this intelligent construction site safety report generator will play an increasingly important role in the future construction industry.</p>
+]]></description>
+      <category>折腾</category>
+    </item>
+    <item>
+      <title>Simple Stack - A Foolproof Stacking Software for MAC</title>
+      <link>https://sunhaha520.github.io/post/ez7Iga/</link>
+      <guid isPermaLink="true">https://sunhaha520.github.io/post/ez7Iga/</guid>
+      <pubDate>Fri, 20 Sep 2024 00:27:12 +0800</pubDate>
+      <description><![CDATA[<p>This is a stacking software developed by Ke Lejun in his spare time, specifically for use on MAC.</p>
+<!-- more -->
+<h2 id="introduction">Introduction</h2>
+<p>In the realm of photography, especially in astrophotography and long-exposure scenarios, image stacking is a technique that combines multiple images to create a single, high-quality image. This process helps in reducing noise and enhancing details. While there are several professional tools available for image stacking, many photographers, especially beginners, seek a simpler, more user-friendly solution.</p>
+<center><img src="https://cdn.dribbble.com/userupload/16654480/file/original-ffd6a846507a9cd21fa625d7d55fe7c6.png" alt="NEW LOGO" width="250" height="250"></center>
+<p>Enter <strong>Simple Stack</strong> – a foolproof stacking software designed specifically for MAC users. Simple Stack aims to simplify the image stacking process, making it accessible to both novice and experienced photographers alike. With an intuitive interface and straightforward functionality, Simple Stack eliminates the complexities often associated with image processing software, allowing users to focus on capturing stunning images rather than wrestling with technical details.</p>
+<h2 id="interface-introduction">Interface Introduction</h2>
+<p><img src="https://cdn.dribbble.com/userupload/16654555/file/original-a871f351543587dc1d7a01b77a96a4c7.webp" alt="Interface" /></p>
+<ul>
+<li>Support for Dark Mode.</li>
+<li>Bilingual Support.</li>
+<li>Simplicity and Ease of Use.</li>
+</ul>
+<h2 id="how-it-works">How It Works</h2>
+<p>In the fields of photography and computer vision, <strong>image stacking</strong> is a powerful technique that combines multiple images into a single high-quality image. This method is commonly used in astrophotography, macro photography, and scenarios requiring long exposures to reduce noise and enhance details. This Section will delve into a Python and OpenCV-based image stacking and enhancement program, explaining its workings in detail.</p>
+<h3 id="program-overview">Program Overview</h3>
+<p>The main function of this program is to align, stack, and enhance multiple images from a specified folder, ultimately generating a high-quality image. The program flow is as follows:</p>
+<ol>
+<li><strong>Load Images</strong>: Load all images from the specified folder.</li>
+<li><strong>Image Alignment</strong>: Align images using ORB feature detection and the RANSAC algorithm.</li>
+<li><strong>Image Stacking</strong>: Stack the aligned images using weighted average stacking.</li>
+<li><strong>Image Enhancement</strong>: Enhance the stacked image using wavelet transform denoising, unsharp masking, and CLAHE for contrast enhancement.</li>
+<li><strong>Save and Display Results</strong>: Save and display the final stacked image.</li>
+</ol>
+<h3 id="code-explanation">Code Explanation</h3>
+<h4 id="1-load-images">1. Load Images</h4>
+<pre><code class="language-python">def load_images_from_folder(folder):
+    images = []
+    for filename in os.listdir(folder):
+        img = cv2.imread(os.path.join(folder, filename))
+        if img is not None:
+            images.append(img)
+    return images
+</code></pre>
+<p>The <code>load_images_from_folder</code> function is responsible for loading all images from the specified folder. It iterates through each file in the folder, reads the image using <code>cv2.imread</code>, and appends successfully read images to the <code>images</code> list.</p>
+<h4 id="2-image-alignment">2. Image Alignment</h4>
+<pre><code class="language-python">def align_images(base_image, image_to_align):
+    orb = cv2.ORB_create()
+    keypoints1, descriptors1 = orb.detectAndCompute(base_image, None)
+    keypoints2, descriptors2 = orb.detectAndCompute(image_to_align, None)
+
+    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    matches = bf.match(descriptors1, descriptors2)
+    matches = sorted(matches, key=lambda x: x.distance)
+    good_matches = matches[:int(len(matches) * 0.15)]
+
+    if len(good_matches) &lt; 4:
+        return None, 0
+
+    src_pts = np.float32([keypoints1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2)
+    dst_pts = np.float32([keypoints2[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2)
+
+    M, mask = cv2.findHomography(dst_pts, src_pts, cv2.RANSAC, 5.0)
+    alignment_quality = np.sum(mask) / len(mask)
+
+    aligned_image = cv2.warpPerspective(image_to_align, M, (base_image.shape[1], base_image.shape[0]))
+
+    return aligned_image, alignment_quality
+</code></pre>
+<p>The <code>align_images</code> function aligns two images. It first uses the ORB feature detector to detect keypoints and descriptors of both images, then uses BFMatcher for feature matching. To improve alignment accuracy, the program retains only the top 15% of matches. Subsequently, the RANSAC algorithm is used to estimate the homography matrix, and the image is transformed using <code>cv2.warpPerspective</code> to achieve alignment.</p>
+<h4 id="3-image-stacking">3. Image Stacking</h4>
+<pre><code class="language-python">def stack_images_weighted_average(images):
+    stacked_image = images[0].astype(np.float32)
+    weights = np.ones_like(stacked_image)
+
+    for image in images[1:]:
+        stacked_image += image.astype(np.float32)
+        weights += np.ones_like(image)
+
+    stacked_image /= weights
+    stacked_image = np.clip(stacked_image, 0, 255).astype(np.uint8)
+
+    return stacked_image
+</code></pre>
+<p>The <code>stack_images_weighted_average</code> function stacks the aligned images using weighted average stacking. It initializes the stacked image with the first image, then iterates through the remaining images, accumulating them into the stacked image and calculating their weights. Finally, it computes the weighted average and converts the result back to <code>uint8</code> format.</p>
+<h4 id="4-image-enhancement">4. Image Enhancement</h4>
+<pre><code class="language-python">def enhance_image(image):
+    if image.dtype != np.uint8:
+        image = np.clip(image, 0, 255).astype(np.uint8)
+
+    coeffs = pywt.dwt2(image, 'db1')
+    cA, (cH, cV, cD) = coeffs
+    cA = pywt.threshold(cA, np.std(cA), mode='soft')
+    cH = pywt.threshold(cH, np.std(cH), mode='soft')
+    cV = pywt.threshold(cV, np.std(cV), mode='soft')
+    cD = pywt.threshold(cD, np.std(cD), mode='soft')
+    denoised_image = pywt.idwt2((cA, (cH, cV, cD)), 'db1')
+
+    if denoised_image.dtype != np.uint8:
+        denoised_image = np.clip(denoised_image, 0, 255).astype(np.uint8)
+
+    blurred = cv2.GaussianBlur(denoised_image, (0, 0), 3)
+    unsharp_mask = cv2.addWeighted(denoised_image, 1.5, blurred, -0.5, 0)
+
+    if unsharp_mask.dtype != np.uint8:
+        unsharp_mask = np.clip(unsharp_mask, 0, 255).astype(np.uint8)
+
+    lab = cv2.cvtColor(unsharp_mask, cv2.COLOR_BGR2LAB)
+    l, a, b = cv2.split(lab)
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    l = clahe.apply(l)
+    lab = cv2.merge((l, a, b))
+    enhanced_image = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+
+    return enhanced_image
+</code></pre>
+<p>The <code>enhance_image</code> function enhances the stacked image. It first denoises the image using wavelet transform, then enhances edges using unsharp masking, and finally enhances contrast using CLAHE (Contrast Limited Adaptive Histogram Equalization).</p>
+<h4 id="5-main-function">5. Main Function</h4>
+<pre><code class="language-python">def main():
+    folder = &quot;/Users/img&quot;
+    images = load_images_from_folder(folder)
+
+    if len(images) == 0:
+        print(&quot;No images found in the folder.&quot;)
+        return
+
+    base_image = images[0]
+    aligned_images = [base_image]
+
+    for image in tqdm(images[1:], desc=&quot;Aligning images&quot;):
+        aligned_image, alignment_quality = align_images(base_image, image)
+        if alignment_quality &gt; 0.5:
+            aligned_images.append(aligned_image)
+
+    stacked_image = stack_images_weighted_average(aligned_images)
+    enhanced_image = enhance_image(stacked_image)
+
+    cv2.imwrite(&quot;stacked_image.jpg&quot;, enhanced_image)
+    cv2.imshow(&quot;Stacked Image&quot;, enhanced_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<p>The <code>main</code> function is the entry point of the program. It first loads the images, then selects the first image as the base image and aligns the remaining images. Next, it stacks and enhances the aligned images, and finally saves and displays the result.</p>
+<h2 id="effect-demonstration">Effect Demonstration</h2>
+<p>We tested many photos and achieved good results.</p>
+<h3 id="processing-of-starry-skies">Processing of Starry Skies</h3>
+<p><img src="https://cdn.dribbble.com/userupload/16654767/file/original-5774d5b3d0c6ccbac611b06d69106bec.webp" alt="Processing of Starry Skies" /></p>
+<h3 id="moon-processing">Moon Processing</h3>
+<p><img src="https://cdn.dribbble.com/userupload/16654766/file/original-d65e2097c4ae1179d610fe074f6ab2f9.webp" alt="moon" /></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Simple Stack represents a significant step forward in making image stacking accessible to a broader audience. By focusing on simplicity, user-friendliness, and powerful functionality, Simple Stack empowers photographers to create high-quality images with ease. Whether you are a beginner or an experienced photographer, Simple Stack offers a seamless and efficient solution for your image stacking needs.</p>
+<p>We invite you to try Simple Stack and experience the difference it can make in your photography workflow. Download it today and start creating stunning images with minimal effort!</p>
+<h2 id="download">Download</h2>
+<p>You can download it from the following link, and it can be used directly after extraction.<br />
+<a href="https://huggingface.co/datasets/ColamanAI/3DPointCloud/resolve/main/SimpleStack.zip">https://huggingface.co/datasets/ColamanAI/3DPointCloud/resolve/main/SimpleStack.zip</a></p>
+]]></description>
+      <category>研究</category>
+    </item>
+    <item>
+      <title>Usage of the Hong Kong University Architectural Dataset</title>
+      <link>https://sunhaha520.github.io/post/6mf98u/</link>
+      <guid isPermaLink="true">https://sunhaha520.github.io/post/6mf98u/</guid>
+      <pubDate>Tue, 17 Sep 2024 00:18:19 +0800</pubDate>
+      <description><![CDATA[<p>The Hong Kong University Architectural Dataset is a project of my advisor, used for training models for architectural component segmentation.</p>
+<!-- more -->
+<h2 id="basic-information">Basic Information</h2>
+<p>In image-driven 3D building reconstruction, instance segmentation is fundamental to pixel-wise building component detection, which can be fused with 3D data like point clouds and meshes via camera projection for semantic reconstruction. While deep learning-based segmentation has obtained promising results, it relies heavily on large-scale datasets for training. Unfortunately, existing large-scale image datasets often include irrelevant objects that obstruct building components, making them unsuitable for 3D building reconstruction. This paper addresses this gap by introducing a large-scale building image dataset to facilitate building component segmentation for 3D reconstruction. The dataset comprises 3378 images captured from both interiors and exteriors of 36 university buildings, annotated with 49,380 object instances across 11 classes. Rigorous quality control measures were employed during data collection and annotation. Evaluation of five typical deep learning-based instance segmentation models demonstrates the dataset’s suitability for training and its value as a benchmark dataset for building component segmentation.</p>
+<p>Below is the link to the paper：<br />
+<em>Mun On Wong, Huaquan Ying, Mengtian Yin, Xiaoyue Yi, Lizhao Xiao, Weilun Duan, Chenchen He, Llewellyn Tang,</em><br />
+<em>Semantic 3D reconstruction-oriented image dataset for building component segmentation,Automation in Construction,Volume 165,2024,105558,ISSN 0926-5805,</em><br />
+<a href="https://doi.org/10.1016/j.autcon.2024.105558">https://doi.org/10.1016/j.autcon.2024.105558</a>.<br />
+<a href="https://www.sciencedirect.com/science/article/pii/S0926580524002942">https://www.sciencedirect.com/science/article/pii/S0926580524002942</a></p>
+<h2 id="my-work">My Work</h2>
+<p>I need to convert this dataset into the YOLOV8 format and then train it for architectural component segmentation. This segmentation can be used in point cloud projection to project individual components, such as walls, windows, or ceilings, where I only need specific elements like walls, windows, or ceilings.</p>
+<p><a href="https://huggingface.co/datasets/ColamanAI/3DPointCloud/tree/main/3D%E7%82%B9%E4%BA%91%E9%87%8D%E5%BB%BA/%E6%95%B0%E6%8D%AE%E9%9B%86/%E9%A6%99%E6%B8%AF%E5%A4%A7%E5%AD%A6">Download Hong Kong University Architectural Dataset in YOLOV8 Format</a></p>
+<p>Now, I will share how to train the dataset into a YOLOV8-supported model file.</p>
+<h2 id="training-process">Training Process</h2>
+<p>I used the free computational power provided by Kaggle for training, and I trained for a total of 330 epochs.</p>
+<h3 id="install-yolov8">Install YOLOv8</h3>
+<p><strong>INPUT:</strong></p>
+<pre><code class="language-python">%pip install ultralytics
+import ultralytics
+ultralytics.checks()
+</code></pre>
+<p><strong>OUTPUT：</strong></p>
+<pre><code class="language-TXT">Ultralytics YOLOv8.2.82 🚀 Python-3.10.13 torch-2.1.2 CUDA:0 (Tesla T4, 15095MiB)
+Setup complete ✅ (4 CPUs, 31.4 GB RAM, 5845.9/8062.4 GB disk)
+</code></pre>
+<h3 id="test-yolov8">Test YOLOv8</h3>
+<p>Now we need to test whether YOLOv8 is installed successfully. We will test it with an official image.<br />
+<strong>INPUT:</strong></p>
+<pre><code class="language-python"># Run inference on an image with YOLOv8n
+!yolo predict model=yolov8n.pt source='https://ultralytics.com/images/zidane.jpg'
+</code></pre>
+<p>If the installation is successful, you will find the following image in the <code>runs/detect/predict</code> folder. At this point, you can start using YOLOv8.</p>
+<p><img src="https://cdn.dribbble.com/userupload/16571146/file/original-d18cc02009eeb2c66e22adbe83e5e8ee.png" alt="test1" /></p>
+<h3 id="begin-training">Begin Training</h3>
+<p>You can start training the dataset using the following program:</p>
+<pre><code class="language-python">!yolo segment train data=/kaggle/input/buliding/data.yaml model=yolov8n-seg.pt epochs=330 imgsz=640 device=[0,1] save_period=50
+</code></pre>
+<p>The content of <code>data.yaml</code> is as follows:</p>
+<pre><code class="language-yaml">train: /kaggle/input/buliding/train/images val: /kaggle/input/buliding/valid/images test: /kaggle/input/buliding/test/images nc: 12 names: ['Beam', 'Ceiling', 'Column', 'CurtainWall', 'Door', 'Floor', 'Lift', 'Opening', 'Roof', 'Wall', 'Window', 'object']
+</code></pre>
+<p>If the training is successful, you will be able to see the training curves in the results.</p>
+<p><img src="https://cdn.dribbble.com/userupload/16571143/file/original-aae739271f3fae8f29050cd3f6e31b5d.webp" alt="results" /></p>
+<p>Below are some details about the scope and labels of architectural components:</p>
+<p><img src="https://cdn.dribbble.com/userupload/16571144/file/original-33a151f6ba7944ca8dcbbd11fe5d1432.webp" alt="pintu-fulicat" /></p>
+<h2 id="test">Test</h2>
+<p>Let&rsquo;s write a piece of code to test the segmentation effect:</p>
+<pre><code class="language-python">from ultralytics import YOLO
+import cv2
+import numpy as np
+
+# Define a set of conspicuous colors
+colors = [
+    (0, 255, 0),    # Green
+    (0, 0, 255),    # Red
+    (255, 0, 0),    # Blue
+    (255, 255, 0),  # Yellow
+    (255, 0, 255),  # Magenta
+    (0, 255, 255),  # Cyan
+    (128, 0, 128),  # Purple
+    (255, 165, 0),  # Orange
+    (0, 128, 128),  # Teal
+    (128, 128, 0)   # Olive
+]
+
+model = YOLO('/runs/best.pt')  # Use instance segmentation model
+
+# Read the image
+image_path = '/Users/0081.png'
+image = cv2.imread(image_path)
+
+# Perform prediction
+results = model(image)
+
+# Process results
+for i, result in enumerate(results):
+    masks = result.masks.data  # Masks
+    boxes = result.boxes.xyxy  # Bounding boxes
+    classes = result.boxes.cls  # Classes
+    scores = result.boxes.conf  # Confidence scores
+
+    # Output results
+    for j, (box, mask, cls, score) in enumerate(zip(boxes, masks, classes, scores)):
+        x1, y1, x2, y2 = map(int, box)
+        class_id = int(cls)
+        confidence = float(score)
+
+        # Output bounding box and class information
+        print(f&quot;Bounding Box: ({x1}, {y1}), ({x2}, {y2})&quot;)
+        print(f&quot;Class: {class_id}, Confidence: {confidence:.2f}&quot;)
+
+        # Convert mask to 8-bit image
+        mask = mask.cpu().numpy()
+        mask = (mask * 255).astype(np.uint8)
+
+        # Resize mask to match the image shape
+        mask = cv2.resize(mask, (image.shape[1], image.shape[0]))
+
+        # Select a conspicuous color
+        color = colors[j % len(colors)]
+
+        # Convert mask to colored mask
+        colored_mask = np.zeros_like(image)
+        colored_mask[mask &gt; 0] = color
+
+        # Overlay colored mask onto the original image
+        image = cv2.addWeighted(image, 1, colored_mask, 0.5, 0)
+
+        # Draw bounding box and class label on the image
+        cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
+        cv2.putText(image, f'Class {class_id}', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
+
+# Display the result image
+cv2.imshow('Segmented Image', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+</code></pre>
+<p>The output of this code:</p>
+<p><img src="https://cdn.dribbble.com/userupload/16571145/file/original-2680f30a18bced74e4ab1dc99f118640.png" alt="output" /></p>
+<p>Great,👌 we have obtained a very good result.</p>
+<h2 id="summary">Summary</h2>
+<p>By training the dataset, we obtained a fairly good result for architectural component segmentation, which plays a significant role in subsequent 3D reconstruction and point cloud modeling. Accurate segmentation of architectural components also makes subsequent work much smoother.</p>
+<p>Enjoy your usage！</p>
+]]></description>
+      <category>研究</category>
+    </item>
+  </channel>
+</rss>
