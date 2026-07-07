@@ -380,7 +380,7 @@ a {
 
 .site-footer {
   margin-top: auto;
-  padding: 32px 0;
+  padding: 24px 0;
   border-top: 1px solid var(--border);
   color: var(--text-soft);
   font-size: 0.8125rem;
@@ -438,7 +438,7 @@ body {
 
 .content-area {
   width: 100%;
-  padding-bottom: 4.5rem;
+  padding-bottom: 2rem;
   flex: 1 0 auto;
 }
 
@@ -1830,8 +1830,8 @@ body {
 }
 
 .comments-wrap {
-  margin-top: 48px;
-  padding-top: 28px;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--border);
 }
 
@@ -2379,27 +2379,42 @@ body {
     grid-template-columns: 1fr;
   }
 
-  #archives.archive-timeline {
+  #archives.archive-timeline,
+  #archives.archive-listing {
     --tl-row-h: 3.15rem;
-    --tl-line-x: 5rem;
-    --tl-row-start: 7rem;
+    --tl-line-x: 2rem;
+    --tl-row-start: 0.5rem;
     width: 100%;
   }
 
-  #archives .archive-list li {
+  #archives .archive-list li,
+  #archives .archive-year-list li {
     min-height: var(--tl-row-h);
     line-height: var(--tl-row-h);
     padding-left: var(--tl-row-start);
     font-size: 0.92rem;
     padding-right: 0.55rem;
     margin: 0.34rem 0;
+    border-bottom: 1px solid var(--border);
   }
 
   #archives .year {
     min-height: 3.35rem;
     line-height: 3.35rem;
     font-size: 1.7rem;
-    padding-left: 6.1rem;
+    padding-left: 0.5rem;
+    text-align: left;
+    margin-top: 1rem;
+  }
+
+  #archives .date.day {
+    min-width: 1.8rem;
+    text-align: left;
+  }
+
+  #archives .date.month {
+    margin-left: 0 !important;
+    padding-right: 0.5rem;
   }
 
   #archives .year::before,
@@ -2467,6 +2482,19 @@ body {
 
   .topbar {
     min-height: 56px;
+  }
+
+  .content-area {
+    padding-bottom: 1rem;
+  }
+
+  .comments-wrap {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .site-footer {
+    padding: 16px 0;
   }
 
   .topbar-search,
