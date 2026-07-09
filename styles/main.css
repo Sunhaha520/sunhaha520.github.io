@@ -101,6 +101,9 @@ html.i18n-pending body {
   --sidebar-text: oklch(40% 0.01 264);
   --sidebar-muted: oklch(50% 0.012 264);
 
+  --card-shadow: rgb(104 104 104 / 5%) 0 2px 6px 0, rgb(211 209 209 / 15%) 0 0 0 1px;
+  --card-hover-bg: #e2e2e2;
+
   /* Dimensions */
   --sidebar-width: 260px;
   --panel-width: 220px;
@@ -138,6 +141,9 @@ html.i18n-pending body {
   --sidebar-to: oklch(17% 0.005 264);
   --sidebar-text: oklch(75% 0.01 264);
   --sidebar-muted: oklch(55% 0.012 264);
+
+  --card-shadow: rgb(21 21 21 / 72%) 0 6px 18px 0, rgb(137 135 135 / 24%) 0 0 0 1px;
+  --card-hover-bg: #464d51;
 }
 
 /* Base reset */
@@ -222,8 +228,7 @@ a {
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 24px 16px;
+  padding: 0;
   z-index: 100;
   transition: transform 0.3s ease;
 }
@@ -278,8 +283,8 @@ a {
 
 @media (min-width: 1280px) {
   .topbar-right {
-    width: calc(var(--panel-width) + 40px);
-    padding-left: 40px;
+    width: 25%;
+    padding-left: 0.5rem;
   }
 }
 
@@ -465,6 +470,20 @@ body {
 @media (min-width: 1280px) {
   .panel-rail {
     display: block;
+    flex: 0 0 25%;
+    max-width: 25%;
+    width: auto;
+    padding-left: 0.5rem;
+  }
+  
+  .main-container {
+    gap: 0;
+  }
+
+  .main-column {
+    flex: 0 0 75%;
+    max-width: 75%;
+    padding-right: 2rem;
   }
 }
 
@@ -475,8 +494,11 @@ body {
 
 /* Sidebar Components */
 .sidebar-header {
-  text-align: center;
-  margin-bottom: 32px;
+  padding-left: 2.5rem;
+  padding-right: 1.25rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .avatar-wrap {
@@ -487,7 +509,7 @@ body {
   border-radius: 50%;
   border: 4px solid var(--bg-card);
   overflow: hidden;
-  margin: 0 auto 16px;
+  margin: 0 0 16px 0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   background-color: color-mix(in srgb, var(--bg-card) 95%, var(--primary));
 }
@@ -519,8 +541,8 @@ body {
 }
 
 .site-title {
-  font-size: 1.1875rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 900;
   letter-spacing: 0.025em;
   margin-bottom: 4px;
 }
@@ -546,12 +568,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding: 0 1.5rem;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 1.5rem;
   padding: 8px 16px;
   color: var(--sidebar-text);
   font-size: 0.9375rem;
@@ -578,14 +601,15 @@ body {
 
 .sidebar-bottom {
   width: 100%;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
+  padding-left: 2rem;
+  padding-right: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .sidebar-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   width: 100%;
   flex-wrap: wrap;
@@ -1386,16 +1410,35 @@ body {
 /* Post Cards */
 .post-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: var(--radius-box);
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   overflow: hidden;
-  transition: transform 0.2s ease, shadow 0.2s ease;
+  position: relative;
+  box-shadow: var(--card-shadow);
+}
+
+.post-card::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: inherit;
+  background-color: var(--card-hover-bg);
+  opacity: 0;
+  transition: opacity 0.35s ease-in-out;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: var(--card-shadow);
+}
+
+.post-card:hover::before {
+  opacity: 0.3;
 }
 
 .post-card-link {
@@ -1512,7 +1555,7 @@ body {
 
 /* Article Page */
 .post-single {
-  max-width: 800px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -2677,5 +2720,50 @@ body {
     min-width: 1.65rem;
     height: 1.65rem;
     font-size: 0.78rem;
+  }
+}
+
+@media (min-width: 1650px) {
+  .sidebar {
+    width: 300px;
+  }
+  .sidebar-header {
+    padding-left: 3.5rem;
+  }
+  .nav-list {
+    padding: 0 2.75rem;
+  }
+  .sidebar-bottom {
+    padding-left: 2.75rem;
+  }
+  .main-wrapper {
+    margin-left: 300px;
+  }
+  .shell {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+  .topbar {
+    margin-left: -1.75rem;
+    margin-right: -1.75rem;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+  .main-container {
+    gap: 0;
+    justify-content: flex-start;
+  }
+  .main-column {
+    flex: 0 0 75%;
+    max-width: 75%;
+    padding-right: 4.5rem;
+  }
+  .panel-rail {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding-left: 0.5rem;
+  }
+  .archive-listing {
+    width: min(100%, 52rem);
   }
 }
