@@ -501,7 +501,9 @@ body {
 }
 
 /* Ultra-wide screens: widen the sidebar to match the original Chirpy and
-   keep the content shell from drifting too far from the sidebar. */
+   let the content shell fill the main-wrapper (no centering). This keeps
+   the main column visually anchored to the sidebar so the card never
+   appears stranded in the middle of a wide viewport. */
 @media (min-width: 1650px) {
   .sidebar {
     width: 300px;
@@ -513,7 +515,18 @@ body {
   }
 
   .shell {
-    padding: 0 28px;
+    max-width: none;
+    align-self: stretch;
+    padding: 0 24px;
+  }
+
+  .main-column {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .panel-rail {
+    padding-left: 1rem;
   }
 }
 
@@ -1474,43 +1487,61 @@ body {
 .post-card-link {
   display: grid;
   grid-template-columns: 1fr;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
+  .post-card {
+    height: 150px; /* Slightly taller so the excerpt can sit visually centered */
+  }
+
   .post-card-link.has-image {
     grid-template-columns: 1fr 240px;
   }
 }
 
 .post-card-body {
-  padding: 24px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .post-card-title {
-  font-size: 1.125rem;
+  font-size: 1.125rem; /* Matches the original Chirpy card-title size */
   font-weight: 700;
-  margin-bottom: 10px;
-  line-height: 1.35;
+  margin-bottom: 0; /* No gap below — let auto margins position the excerpt */
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
 }
 
 .post-card-excerpt {
   color: var(--text-soft);
   font-size: 0.9rem;
-  margin-bottom: 16px;
+  margin-top: auto; /* Auto margins push the excerpt into the visual center */
+  margin-bottom: auto; /* between the title and the meta */
+  line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; /* Two lines, sandwiched between title and meta */
   -webkit-box-orient: vertical;
   overflow: hidden;
+  word-break: break-word;
 }
 
 .post-card-meta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
-  font-size: 0.8125rem;
+  gap: 10px;
+  font-size: 0.75rem;
   color: var(--text-soft);
-  line-height: 1;
+  line-height: 1.5;
+  margin-top: 0; /* Pinned to the bottom by the excerpt's bottom auto margin */
 }
 
 .post-card-meta .meta-item {
@@ -1560,7 +1591,7 @@ body {
 
 @media (min-width: 768px) {
   .post-card-link.has-image .post-card-image-wrap {
-    height: auto;
+    height: 100%; /* Fill the fixed card height instead of stretching */
     border-left: 0;
   }
 }
@@ -2433,13 +2464,7 @@ body {
     padding-right: 20px;
   }
 
-  .post-hero {
-    border-radius: 0;
-  }
-
-  .post-hero img {
-    border-radius: 0;
-  }
+  /* Keep the hero image rounded on mobile too — let it inherit --radius-box */
 
   .topbar-search {
     width: 220px;
