@@ -1490,18 +1490,12 @@ body {
   height: 100%;
 }
 
-@media (min-width: 768px) {
-  .post-card {
-    height: 150px; /* Slightly taller so the excerpt can sit visually centered */
-  }
-
-  .post-card-link.has-image {
-    grid-template-columns: 1fr 240px;
-  }
-}
+/* === Base: mobile-first defaults ===
+   Mobile gets looser padding, smaller type, and fixed gaps.
+   The desktop @media below overrides these for ≥768px. */
 
 .post-card-body {
-  padding: 12px 18px;
+  padding: 18px 20px; /* Looser padding so 2-line title doesn't crowd the edges */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1509,10 +1503,10 @@ body {
 }
 
 .post-card-title {
-  font-size: 1.125rem; /* Matches the original Chirpy card-title size */
+  font-size: 1rem; /* Slightly smaller than the desktop title */
   font-weight: 700;
-  margin-bottom: 0; /* No gap below — let auto margins position the excerpt */
-  line-height: 1.3;
+  margin-bottom: 8px; /* Visible gap between title and excerpt */
+  line-height: 1.35;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1522,12 +1516,12 @@ body {
 
 .post-card-excerpt {
   color: var(--text-soft);
-  font-size: 0.9rem;
-  margin-top: auto; /* Auto margins push the excerpt into the visual center */
-  margin-bottom: auto; /* between the title and the meta */
+  font-size: 0.875rem;
+  margin-top: 0; /* No auto-centering on mobile — card height is auto */
+  margin-bottom: 14px; /* Slightly more breathing room before the meta row */
   line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Two lines, sandwiched between title and meta */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: break-word;
@@ -1537,11 +1531,54 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   font-size: 0.75rem;
   color: var(--text-soft);
   line-height: 1.5;
-  margin-top: 0; /* Pinned to the bottom by the excerpt's bottom auto margin */
+  margin-top: 0;
+}
+
+/* === Desktop: tight fixed height with auto-centered excerpt === */
+@media (min-width: 768px) {
+  .post-card {
+    height: 150px; /* Tall enough to fit 2-line title + 2-line excerpt with even gaps */
+  }
+
+  .post-card-link.has-image {
+    grid-template-columns: 1fr 240px;
+  }
+
+  .post-card-body {
+    padding: 12px 18px; /* Tighter padding for the short card */
+  }
+
+  .post-card-title {
+    font-size: 1.125rem; /* Matches the original Chirpy card-title size */
+    line-height: 1.3;
+    margin-bottom: 0; /* No gap below — let auto margins position the excerpt */
+  }
+
+  .post-card-excerpt {
+    font-size: 0.9rem;
+    margin-top: auto; /* Auto margins push the excerpt into the visual center */
+    margin-bottom: auto; /* between the title and the meta */
+    line-height: 1.5;
+  }
+
+  .post-card-meta {
+    gap: 10px;
+  }
+}
+
+/* === Mobile: shorter image + 3-line excerpt === */
+@media (max-width: 767.98px) {
+  .post-card-image-wrap {
+    height: 160px; /* Slightly shorter hero on mobile to keep the card compact */
+  }
+
+  .post-card-excerpt {
+    -webkit-line-clamp: 3; /* Three lines on mobile — gives the excerpt more room to breathe */
+  }
 }
 
 .post-card-meta .meta-item {
