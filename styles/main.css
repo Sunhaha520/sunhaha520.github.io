@@ -235,6 +235,7 @@ a {
 
 .main-wrapper {
   margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -244,6 +245,7 @@ a {
   max-width: var(--content-max-width);
   width: 100%;
   margin: 0 auto;
+  align-self: center;
   padding: 0 48px;
   display: flex;
   flex-direction: column;
@@ -474,6 +476,9 @@ body {
     max-width: 25%;
     width: auto;
     padding-left: 0.5rem;
+    align-self: flex-start;
+    position: sticky;
+    top: calc(var(--topbar-height) + 2rem);
   }
   
   .main-container {
@@ -2387,6 +2392,7 @@ body {
   }
   .main-wrapper {
     margin-left: 0;
+    width: 100%;
   }
   .mobile-nav-toggle {
     display: block;
@@ -2738,6 +2744,7 @@ body {
   }
   .main-wrapper {
     margin-left: 300px;
+    width: calc(100% - 300px);
   }
   .shell {
     padding-left: 1.75rem;
@@ -2762,6 +2769,9 @@ body {
     flex: 0 0 25%;
     max-width: 25%;
     padding-left: 0.5rem;
+    align-self: flex-start;
+    position: sticky;
+    top: calc(var(--topbar-height) + 2rem);
   }
   .archive-listing {
     width: min(100%, 52rem);
