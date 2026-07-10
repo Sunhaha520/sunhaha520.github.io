@@ -246,7 +246,7 @@ a {
   width: 100%;
   margin: 0 auto;
   align-self: center;
-  padding: 0 48px;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -265,10 +265,10 @@ a {
   backdrop-filter: blur(12px);
   z-index: 90;
   margin-bottom: 24px;
-  margin-left: -48px;
-  margin-right: -48px;
-  padding-left: 48px;
-  padding-right: 48px;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .topbar-left,
@@ -443,6 +443,13 @@ body {
   flex-direction: column;
 }
 
+@media (min-width: 768px) {
+  .main-column {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
 .content-area {
   width: 100%;
   padding-bottom: 2rem;
@@ -488,7 +495,25 @@ body {
   .main-column {
     flex: 0 0 75%;
     max-width: 75%;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Ultra-wide screens: widen the sidebar to match the original Chirpy and
+   keep the content shell from drifting too far from the sidebar. */
+@media (min-width: 1650px) {
+  .sidebar {
+    width: 300px;
+  }
+
+  .main-wrapper {
+    margin-left: 300px;
+    width: calc(100% - 300px);
+  }
+
+  .shell {
+    padding: 0 28px;
   }
 }
 
@@ -1608,7 +1633,7 @@ body {
 
 .post-hero {
   position: relative;
-  margin: 0 -24px 32px;
+  margin: 0 0 32px;
   background: transparent;
   overflow: hidden;
   border-radius: var(--radius-box);
@@ -2409,8 +2434,6 @@ body {
   }
 
   .post-hero {
-    margin-left: -20px;
-    margin-right: -20px;
     border-radius: 0;
   }
 
