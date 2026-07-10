@@ -1503,7 +1503,7 @@ body {
 }
 
 .post-card-title {
-  font-size: 1rem; /* Slightly smaller than the desktop title */
+  font-size: 1.125rem; /* Matches the desktop size so mobile doesn't feel squashed */
   font-weight: 700;
   margin-bottom: 8px; /* Visible gap between title and excerpt */
   line-height: 1.35;
@@ -1516,7 +1516,7 @@ body {
 
 .post-card-excerpt {
   color: var(--text-soft);
-  font-size: 0.875rem;
+  font-size: 0.95rem; /* Larger than the 0.875rem default — matches the desktop ratio */
   margin-top: 0; /* No auto-centering on mobile — card height is auto */
   margin-bottom: 14px; /* Slightly more breathing room before the meta row */
   line-height: 1.5;
@@ -1559,7 +1559,7 @@ body {
   }
 
   .post-card-excerpt {
-    font-size: 0.9rem;
+    font-size: 0.95rem; /* Matches the mobile default — unified type scale */
     margin-top: auto; /* Auto margins push the excerpt into the visual center */
     margin-bottom: auto; /* between the title and the meta */
     line-height: 1.5;
