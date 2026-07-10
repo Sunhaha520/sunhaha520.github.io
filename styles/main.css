@@ -1476,12 +1476,16 @@ body {
   z-index: 1;
 }
 
-.post-card:hover {
-  box-shadow: var(--card-shadow);
-}
+/* Hover overlay only on devices that actually have a hover state (mouse / trackpad).
+   Touch devices report (hover: none), so they skip this rule entirely. */
+@media (hover: hover) {
+  .post-card:hover {
+    box-shadow: var(--card-shadow);
+  }
 
-.post-card:hover::before {
-  opacity: 0.3;
+  .post-card:hover::before {
+    opacity: 0.3;
+  }
 }
 
 .post-card-link {
