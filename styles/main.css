@@ -509,27 +509,41 @@ body {
    We cap the shell width to 1250px (original Chirpy spec) and center it
    within the remaining space to ensure a balanced look on high-res screens. */
 @media (min-width: 1650px) {
+  html {
+    font-size: 17.5px; /* Aggressive simulation of 110% zoom */
+  }
+
   .sidebar {
-    width: 300px;
+    width: 330px; /* Scaled sidebar */
   }
 
   .main-wrapper {
-    margin-left: 300px;
-    width: calc(100% - 300px);
+    margin-left: 330px;
+    width: calc(100% - 330px);
   }
 
   .shell {
-    max-width: 1250px;
-    margin: 0 auto;
-    align-self: center;
-    padding: 0 1.75rem; /* Exact Chirpy XXXL padding */
+    max-width: 1700px;
+    /* Achieving absolute visual symmetry for 2K screens.
+       We want: (Sidebar + Left Margin) == (Right Margin).
+       Let screen width be W, Sidebar be S, Shell be M.
+       Offset from left = S + MarginLeft.
+       Offset from right = W - (S + MarginLeft + M).
+       For symmetry: S + MarginLeft = W - (S + MarginLeft + M)
+       2 * (S + MarginLeft) = W - M
+       MarginLeft = (W - M) / 2 - S.
+       In CSS: margin-left = calc(50% - (M / 2) - S).
+    */
+    margin-left: calc(max(1.5rem, 50% - 850px - 330px));
+    margin-right: auto;
+    padding: 0 1.75rem;
   }
 
   .main-column {
     flex: 0 0 75%;
     max-width: 75%;
     padding-left: 1.5rem;
-    padding-right: 2.25rem; /* Fine-tuned for visual symmetry with panel */
+    padding-right: 2rem; /* Reduced to pull panel closer for better balance */
   }
 
   .panel-rail {
@@ -551,7 +565,7 @@ body {
   }
 
   .archive-listing {
-    width: min(100%, 52rem);
+    width: min(100%, 55rem);
   }
 }
 
