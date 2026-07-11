@@ -239,8 +239,8 @@ a {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 @media (min-width: 640px) {
@@ -293,7 +293,25 @@ a {
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 4px; /* Even tighter gap for mobile */
+}
+
+.mobile-nav-toggle {
+  background: none;
+  border: none;
+  color: var(--text-soft);
+  cursor: pointer;
+  padding: 2px; /* Minimum padding */
+  margin-left: -6px; /* Pull even closer to the edge */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .mobile-nav-toggle {
+    display: none;
+  }
 }
 
 .topbar-right {
@@ -1597,11 +1615,12 @@ body {
    The desktop @media below overrides these for ≥768px. */
 
 .post-card-body {
-  padding: 1rem 1.5rem; /* Base padding */
+  padding: 0.875rem 1rem; /* Reduced internal padding for mobile */
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 
 .post-card-title {
@@ -1658,14 +1677,14 @@ body {
   }
 }
 
-/* === Mobile: shorter image + 2-line excerpt === */
+/* === Mobile: shorter image + 3-line excerpt === */
 @media (max-width: 767.98px) {
   .post-card-image-wrap {
     height: 160px; /* Slightly shorter hero on mobile to keep the card compact */
   }
 
   .post-card-excerpt {
-    -webkit-line-clamp: 2; /* Strictly 2 lines as requested */
+    -webkit-line-clamp: 3; /* Increased to 3 lines for mobile content density */
   }
 }
 
