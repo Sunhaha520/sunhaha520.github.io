@@ -479,10 +479,10 @@ body {
 @media (min-width: 1280px) {
   .panel-rail {
     display: block;
-    flex: 0 0 25%;
-    max-width: 25%;
+    flex: 0 0 28%;
+    max-width: 28%;
     width: auto;
-    padding-left: 0.5rem;
+    padding-left: 0;
     align-self: flex-start;
     position: sticky;
     top: calc(var(--topbar-height) + 2rem);
@@ -493,17 +493,16 @@ body {
   }
 
   .main-column {
-    flex: 0 0 75%;
-    max-width: 75%;
-    padding-left: 1rem;
+    flex: 0 0 72%;
+    max-width: 72%;
+    padding-left: 2rem;
     padding-right: 1.5rem;
   }
 }
 
-/* Ultra-wide screens: widen the sidebar to match the original Chirpy and
-   let the content shell fill the main-wrapper (no centering). This keeps
-   the main column visually anchored to the sidebar so the card never
-   appears stranded in the middle of a wide viewport. */
+/* Ultra-wide screens: widen the sidebar and balance the layout cluster.
+   We limit the max-width of the shell to prevent it from stretching too far,
+   and adjust the ratios to bring the right sidebar closer to the content. */
 @media (min-width: 1650px) {
   .sidebar {
     width: 300px;
@@ -515,18 +514,23 @@ body {
   }
 
   .shell {
-    max-width: none;
-    align-self: stretch;
+    max-width: 1350px;
+    align-self: center;
+    margin: 0 auto;
     padding: 0 24px;
   }
 
   .main-column {
-    padding-left: 1.5rem;
+    flex: 0 0 70%;
+    max-width: 70%;
+    padding-left: 2.5rem;
     padding-right: 1.5rem;
   }
 
   .panel-rail {
-    padding-left: 1rem;
+    flex: 0 0 30%;
+    max-width: 30%;
+    padding-left: 0;
   }
 }
 
