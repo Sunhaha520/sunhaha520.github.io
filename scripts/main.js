@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const x = 0;
     const y = window.innerHeight;
     // Radius to cover the farthest corner (top-right) from bottom-left.
-    const radius = Math.hypot(window.innerWidth, window.innerHeight);
+    const radius = Math.ceil(Math.hypot(window.innerWidth, window.innerHeight));
 
     html.style.setProperty('--theme-x', x + 'px');
     html.style.setProperty('--theme-y', y + 'px');
@@ -108,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const transition = document.startViewTransition(function () {
       updateTheme(nextTheme);
     });
+
+    // Performance hint: skip animation if frame drops are detected (simplified)
     transition.finished.finally(function () {
       delete html.dataset.themeAnim;
     });

@@ -27,6 +27,7 @@ html.i18n-pending body {
   ::view-transition-new(root) {
     animation: none;
     mix-blend-mode: normal;
+    will-change: clip-path, opacity;
   }
 
   /* Going to dark: animate the NEW snapshot in. */
@@ -35,16 +36,24 @@ html.i18n-pending body {
   }
   html[data-theme-anim='to-dark']::view-transition-new(root) {
     z-index: 2;
-    animation: chirpy-theme-reveal 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: chirpy-theme-reveal 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
   /* Going to light: animate the OLD (dark) snapshot away. */
   html[data-theme-anim='to-light']::view-transition-old(root) {
     z-index: 2;
-    animation: chirpy-theme-conceal 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: chirpy-theme-conceal 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   html[data-theme-anim='to-light']::view-transition-new(root) {
     z-index: 1;
+  }
+
+  /* Simplified mobile animation to reduce paint cost */
+  @media (max-width: 768px) {
+    html[data-theme-anim='to-dark']::view-transition-new(root),
+    html[data-theme-anim='to-light']::view-transition-old(root) {
+      animation-duration: 300ms;
+    }
   }
 
   @keyframes chirpy-theme-reveal {
@@ -2776,7 +2785,7 @@ body {
   }
 
   .memo-heatmap-months {
-    padding-left: calc(var(--memo-day-width) + 6px);
+    padding-left: calc(var(--memo-day-width) + 8px);
   }
 
   .memo-heatmap-day-label {

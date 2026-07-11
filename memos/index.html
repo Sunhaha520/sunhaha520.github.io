@@ -837,11 +837,19 @@
       function buildLabels(weekList) {
         var labels = [];
         var lastMonth = -1;
+        var lastIndex = -1;
+        var isMobile = window.matchMedia('(max-width: 768px)').matches;
+        var minGap = isMobile ? 4 : 2; // On mobile, skip labels if they are closer than 4 weeks
+
         for (var i = 0; i < weekList.length; i++) {
           var first = weekList[i][0];
           if (first.month !== lastMonth) {
-            labels.push({ index: i, label: monthLabelsText[first.month] });
-            lastMonth = first.month;
+            // Check if we have enough space from the last label
+            if (lastIndex === -1 || (i - lastIndex) >= minGap) {
+              labels.push({ index: i, label: monthLabelsText[first.month] });
+              lastIndex = i;
+              lastMonth = first.month;
+            }
           }
         }
         return labels;
@@ -854,8 +862,8 @@
         var maxCellSize = isMobile ? 10 : 12;
         var cellGap = isMobile ? 2 : 3;
         var rowGap = isMobile ? 4 : cellGap;
-        var dayLabelWidth = isMobile ? 16 : 20;
-        var leadingGap = isMobile ? 6 : 8;
+        var dayLabelWidth = isMobile ? 18 : 20; // Increased from 16 to 18 to fix "日" cut off
+        var leadingGap = isMobile ? 8 : 8; // Increased from 6 to 8 for better spacing
         var monthTailSpace = isMobile ? 12 : 18;
         var wrapStyle = wrap ? window.getComputedStyle(wrap) : null;
         var wrapWidth = (wrap ? wrap.clientWidth : root.clientWidth) || 0;
