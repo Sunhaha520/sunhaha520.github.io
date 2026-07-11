@@ -519,7 +519,8 @@ document.addEventListener('DOMContentLoaded', function() {
         page: String(embedInfo.page || 1),
         autoplay: '0',
         high_quality: '1',
-        danmaku: '0'
+        danmaku: '0',
+        as_wide: '1'
       });
 
       if (embedInfo.bvid) {
@@ -533,7 +534,8 @@ document.addEventListener('DOMContentLoaded', function() {
       wrapper.innerHTML =
         '<iframe src="https://player.bilibili.com/player.html?' + params.toString() + '"' +
         ' title="' + currentDict['post.bilibiliTitle'] + '"' +
-        ' loading="lazy" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>';
+        ' loading="lazy" scrolling="no" frameborder="0" allowfullscreen="true" ' +
+        ' referrerpolicy="no-referrer-when-downgrade"></iframe>';
       node.replaceWith(wrapper);
     });
   }
@@ -714,4 +716,109 @@ document.addEventListener('DOMContentLoaded', function() {
       link.classList.add('active');
     }
   });
+
+  // --- Lightbox Implementation ---
+  const initLightbox = () => {
+    const postImages = Array.from(document.querySelectorAll('.post-content img, .prose img'))
+      .filter(img => !img.closest('a') && !img.classList.contains('memo-icon'));
+    
+    if (postImages.length === 0) return;
+
+    let currentIndex = 0;
+
+    // Create lightbox elements if they don't exist
+    let overlay = document.querySelector('.lightbox-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'lightbox-overlay';
+      overlay.innerHTML = `
+        <button class="lightbox-close" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <button class="lightbox-nav prev" aria-label="Previous">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="lightbox-nav next" aria-label="Next">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        <div class="lightbox-counter"></div>
+        <img class="lightbox-image" src="" alt="">
+      `;
+      document.body.appendChild(overlay);
+
+      const closeBtn = overlay.querySelector('.lightbox-close');
+      const prevBtn = overlay.querySelector('.lightbox-nav.prev');
+      const nextBtn = overlay.querySelector('.lightbox-nav.next');
+      const lbImage = overlay.querySelector('.lightbox-image');
+      const counter = overlay.querySelector('.lightbox-counter');
+
+      const updateLightbox = (index) => {
+        currentIndex = index;
+        const img = postImages[currentIndex];
+        lbImage.src = img.src;
+        lbImage.alt = img.alt || '';
+        
+        // Update counter
+        counter.textContent = (currentIndex + 1) + ' / ' + postImages.length;
+        
+        // Toggle nav buttons
+        if (postImages.length <= 1) {
+          prevBtn.classList.add('is-hidden');
+          nextBtn.classList.add('is-hidden');
+          counter.classList.add('is-hidden');
+        } else {
+          prevBtn.classList.toggle('is-hidden', currentIndex === 0);
+          nextBtn.classList.toggle('is-hidden', currentIndex === postImages.length - 1);
+          counter.classList.remove('is-hidden');
+        }
+      };
+
+      const closeLightbox = () => {
+        overlay.classList.remove('is-visible');
+        document.body.style.overflow = '';
+      };
+
+      const showPrev = (e) => {
+        if (e) e.stopPropagation();
+        if (currentIndex > 0) updateLightbox(currentIndex - 1);
+      };
+
+      const showNext = (e) => {
+        if (e) e.stopPropagation();
+        if (currentIndex < postImages.length - 1) updateLightbox(currentIndex + 1);
+      };
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target === closeBtn || e.target.closest('.lightbox-close')) {
+          closeLightbox();
+        }
+      });
+
+      prevBtn.addEventListener('click', showPrev);
+      nextBtn.addEventListener('click', showNext);
+
+      document.addEventListener('keydown', (e) => {
+        if (!overlay.classList.contains('is-visible')) return;
+        
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      });
+
+      // Export for internal use
+      overlay._update = updateLightbox;
+    }
+
+    const overlayUpdate = overlay._update;
+
+    postImages.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        overlayUpdate(index);
+        overlay.classList.add('is-visible');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+  };
+
+  initLightbox();
 });

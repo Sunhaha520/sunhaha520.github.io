@@ -2441,6 +2441,13 @@ body {
 
 .prose .bilibili-embed {
   position: relative;
+  width: 100%;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border-radius: var(--radius-box);
+  border: 1px solid var(--border);
+  background: #000;
+  aspect-ratio: 16 / 9;
 }
 
 /* KaTeX Layout Fix */
@@ -2461,14 +2468,6 @@ body {
 }
 .katex-display > .katex > .katex-html {
   display: block;
-}
-  width: 100%;
-  margin: 1.5rem 0;
-  overflow: hidden;
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  background: #000;
-  aspect-ratio: 16 / 9;
 }
 
 .prose .bilibili-embed iframe {
